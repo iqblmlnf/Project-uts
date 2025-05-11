@@ -6,7 +6,8 @@ import Tim          from '@/views/Tim.vue'
 import Contact      from '@/views/Contact.vue'
 
 const routes = [
-    { path: '/',          name: 'Jelajah',    component: Home },
+    { path: '/',          name: 'Home',    component: Home },
+    { path: '/jelajah',name: 'Jelajah', component: Jelajah },
     { path: '/tim',name: 'Tim', component: Tim },
     { path: '/contact', name: 'Hubungi Kami', component: Contact}
 ]

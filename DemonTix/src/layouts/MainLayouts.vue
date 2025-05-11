@@ -2,7 +2,8 @@
 import { RouterLink, RouterView } from 'vue-router'
 
 const items = [
-  { to: '/', name: 'Jelajah' },
+  { to: '/', name: 'Home' },
+  { to: '/jelajah', name: 'Jelajah' },
   { to: '/tim', name: 'Team Project' },
   { to: '/contact', name: 'Hubungi Kami' }
 ]
