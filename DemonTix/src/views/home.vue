@@ -1,6 +1,6 @@
 <template>
   <div class="home-page">
-    <!-- Carousel -->
+    <!-- Carousel Banner -->
     <div class="carousel-container">
       <div class="slides" :style="{ transform: `translateX(-${currentIndex * 100}%)` }">
         <div class="slide" v-for="(banner, index) in banners" :key="index">
@@ -24,30 +24,28 @@
       <div class="event-carousel">
         <button @click="prevSlide" class="nav-btn left">&#8592;</button>
 
-        <div class="event-cards">
-          <div
-            v-for="(event, index) in visibleEvents"
-            :key="index"
-            class="event-card"
-          >
-            <img :src="event.image" alt="Event" />
-            <h3>{{ event.title }}</h3>
-            <div class="event-info">
-              <p><i class="fa fa-calendar"></i> {{ event.date }}</p>
-              <p><i class="fa fa-map-marker"></i> {{ event.location }}</p>
-            </div>
-            <div class="event-footer">
-              <span class="price">Rp {{ event.price }}</span>
-              <button class="buy-btn">Beli Tiket</button>
+        <div class="event-cards-wrapper">
+          <div class="event-cards" :style="{ transform: `translateX(-${currentEventIndex * (cardWidth + gap)}px)` }">
+            <div v-for="(event, index) in events" :key="index" class="event-card">
+              <img :src="event.image" alt="Event" />
+              <h3>{{ event.title }}</h3>
+              <div class="event-info">
+                <p><i class="fa fa-calendar"></i> {{ event.date }}</p>
+                <p><i class="fa fa-map-marker"></i> {{ event.location }}</p>
+              </div>
+              <div class="event-footer">
+                <span class="price">Rp {{ event.price }}</span>
+                <button class="buy-btn">Beli Tiket</button>
+              </div>
             </div>
           </div>
         </div>
 
-        <button @click="nextSlideEvent" class="nav-btn right">&#8594;</button>
+        <button @click="nextSlide" class="nav-btn right">&#8594;</button>
       </div>
     </div>
 
-    <!-- Laris Manis Section -->
+    <!-- Laris Manis Section (Tidak Diubah) -->
     <div class="laris-section">
       <div class="laris-text">
         <h2>Laris Manis!</h2>
@@ -75,320 +73,263 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, computed } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 
 /* Banner Logic */
-const banners = [
-  '/banner1.png',
-  '/banner2.png',
-  '/banner3.png',
-  '/banner4.png'
-]
-
+const banners = ['/banner1.png', '/banner2.png', '/banner3.png']
 const currentIndex = ref(0)
-let intervalId = null
+let bannerInterval = null
 
 const goToSlide = (index) => {
   currentIndex.value = index
 }
-
-const nextSlide = () => {
+const nextBannerSlide = () => {
   currentIndex.value = (currentIndex.value + 1) % banners.length
 }
 
 onMounted(() => {
-  intervalId = setInterval(nextSlide, 3000)
+  bannerInterval = setInterval(nextBannerSlide, 3000)
 })
-
 onUnmounted(() => {
-  clearInterval(intervalId)
+  clearInterval(bannerInterval)
 })
 
-/* Event Carousel Logic */
-const currentEventIndex = ref(0)
+/* Rekomendasi Event Carousel Logic */
 const events = [
-  {
-    title: 'Ruang Bermusik 2025',
-    date: '19 - 20 Jul 2025',
-    location: 'LANUD WIRIADINATA',
-    price: '80.000',
-    image: '/eventmusik1.png',
-  },
-  {
-    title: 'HIPHOP SORINGIN FESTIVAL',
-    date: '10 Mei 2025',
-    location: 'JNM BLOC',
-    price: '35.000',
-    image: '/eventolahraga1.png',
-  },
-  {
-    title: 'BALI BARBER EXPO',
-    date: '05 - 06 Jul 2025',
-    location: 'Dharma Negara Alaya',
-    price: '500.000',
-    image: '/eventmusik2.png',
-  },
-  {
-    title: 'BARAMIAN FEST 2025',
-    date: '28 - 29 Jun 2025',
-    location: 'Gedung Sultan Suriansyah',
-    price: '150.000',
-    image: '/eventolahraga2.jpeg',
-  },
+  { title: 'Event 1', date: '10 Mei 2025', location: 'Jakarta', price: '50.000', image: '/eventmusik1.png' },
+  { title: 'Event 2', date: '11 Mei 2025', location: 'Bandung', price: '75.000', image: '/eventolahraga1.png' },
+  { title: 'Event 3', date: '12 Mei 2025', location: 'Surabaya', price: '100.000', image: '/eventmusik2.png' },
+  { title: 'Event 4', date: '13 Mei 2025', location: 'Yogyakarta', price: '60.000', image: '/eventolahraga2.jpeg' },
+  { title: 'Event 5', date: '14 Mei 2025', location: 'Bali', price: '120.000', image: '/eventmusik1.png' },
+  { title: 'Event 6', date: '15 Mei 2025', location: 'Lombok', price: '90.000', image: '/eventmusik2.png' },
+  { title: 'Event 1', date: '10 Mei 2025', location: 'Jakarta', price: '50.000', image: '/eventmusik1.png' },
+  { title: 'Event 2', date: '11 Mei 2025', location: 'Bandung', price: '75.000', image: '/eventolahraga1.png' },
+  { title: 'Event 3', date: '12 Mei 2025', location: 'Surabaya', price: '100.000', image: '/eventmusik2.png' },
+  { title: 'Event 4', date: '13 Mei 2025', location: 'Yogyakarta', price: '60.000', image: '/eventolahraga2.jpeg' },
+  { title: 'Event 5', date: '14 Mei 2025', location: 'Bali', price: '120.000', image: '/eventmusik1.png' },
+  { title: 'Event 6', date: '15 Mei 2025', location: 'Lombok', price: '90.000', image: '/eventmusik2.png' },
 ]
 
-const visibleEvents = computed(() => {
-  return events.slice(currentEventIndex.value, currentEventIndex.value + 4)
-})
+const currentEventIndex = ref(0)
+const cardWidth = 240
+const gap = 20
+const maxIndex = events.length - 4
 
-const nextSlideEvent = () => {
-  if (currentEventIndex.value + 4 < events.length) {
-    currentEventIndex.value += 1
+const nextSlide = () => {
+  if (currentEventIndex.value < maxIndex) {
+    currentEventIndex.value++
   }
 }
 
 const prevSlide = () => {
   if (currentEventIndex.value > 0) {
-    currentEventIndex.value -= 1
+    currentEventIndex.value--
   }
 }
 
-/* Laris Manis Section */
+/* Laris Manis Events */
 const larisEvents = [
-  {
-    title: "LAND OF KOPLO",
-    organizer: "TWENTY THREE ENTERTAINMENT",
-    date: "24 May 2025",
-    location: "Stadion Kridosono, Yogyakarta",
-    image: "/eventlaris1.png",
-  },
-  {
-    title: "Pesta Mangan",
-    organizer: "Pesta Mangan",
-    date: "30 - 01 Jun 2025",
-    location: "Alun-alun Barat Kota Serang Banten",
-    image: "/eventlaris2.png",
-  },
-  {
-    title: "Story in Garut 2025",
-    organizer: "One Night Project",
-    date: "17 May 2025",
-    location: "Lapangan Korem Garut",
-    image: "/eventlaris3.png",
-  },
+  { title: "LAND OF KOPLO", organizer: "TWENTY THREE ENTERTAINMENT", date: "24 May 2025", location: "Stadion Kridosono", image: "/eventmusik1.png" },
+  { title: "Pesta Mangan", organizer: "Pesta Mangan", date: "30 - 01 Jun 2025", location: "Alun-alun Kota Serang", image: "/eventmusik2.png" },
+  { title: "Story in Garut", organizer: "One Night Project", date: "17 May 2025", location: "Lapangan Korem Garut", image: "/eventolahraga2.jpeg" },
+  { title: "LAND OF KOPLO", organizer: "TWENTY THREE ENTERTAINMENT", date: "24 May 2025", location: "Stadion Kridosono", image: "/eventmusik1.png" },
+  { title: "Pesta Mangan", organizer: "Pesta Mangan", date: "30 - 01 Jun 2025", location: "Alun-alun Kota Serang", image: "/eventmusik2.png" },
+  { title: "Story in Garut", organizer: "One Night Project", date: "17 May 2025", location: "Lapangan Korem Garut", image: "/eventolahraga2.jpeg" }
 ]
 </script>
 
 <style scoped>
+.home-page {
+  font-family: Arial, sans-serif;
+  background: #f5f5f5;
+}
+
+/* Carousel */
 .carousel-container {
   position: relative;
   width: 100%;
   height: 400px;
-  margin-top: 30px;
-  margin-bottom: 30px;
   overflow: hidden;
-  padding: 0 20px;
+  margin-bottom: 40px;
+  border-radius: 16px;
 }
-
 .slides {
   display: flex;
-  transition: transform 0.5s ease-in-out;
-  height: 100%;
+  transition: transform 0.5s ease;
 }
-
 .slide {
   min-width: 100%;
-  height: 100%;
-  flex-shrink: 0;
 }
-
 .slide img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  display: block;
-  border-radius: 20px;
+  border-radius: 16px;
+}
+.dots {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.dot {
+  height: 10px;
+  width: 10px;
+  margin: 0 5px;
+  background: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  cursor: pointer;
+}
+.dot.active {
+  background: #333;
 }
 
-/* Event section */
+/* Event Section */
 .event-section {
-  margin: 40px 20px;
-}
+ margin: 40px 20px;
+} 
+
 .section-title {
-  font-size: 24px;
+  margin-left: 490px;
   margin-bottom: 20px;
-  margin-left: 230px;
+  font-size: 24px;
   font-weight: bold;
 }
-
 .event-carousel {
   display: flex;
   align-items: center;
-  justify-content: center; 
-  position: relative;
-  margin: 0 auto;
+  justify-content: center;
+  gap: 16px;
+  margin: 30px 0;
 }
-
+.event-cards-wrapper {
+  overflow: hidden;
+  width: 1000px;
+}
 .event-cards {
   display: flex;
-  justify-content: center;
-  gap: 19px;
-  flex: 1;
-  max-width: 1000px;
+  transition: transform 0.4s ease-in-out;
 }
-
 .event-card {
-  background: #fff;
+  background: white;
   border-radius: 16px;
-  border: 1px solid #eee;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-  min-width: 240px;
-  max-width: 240px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-  padding: 0;
+  width: 240px;
+  margin-right: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  flex-shrink: 0;
 }
-
 .event-card img {
   width: 100%;
   height: 140px;
   object-fit: cover;
-  display: block;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
 }
-
 .event-card h3 {
+  padding: 12px 16px 4px;
   font-size: 16px;
-  margin: 10px 16px 4px;
   font-weight: bold;
 }
-
 .event-info {
   padding: 0 16px;
-}
-
-.event-info p {
   font-size: 12px;
-  margin: 4px 0;
   color: #666;
 }
-
+.event-info p {
+  margin: 4px 0;
+}
 .event-footer {
+  padding: 12px 16px 16px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 12px 16px 16px;
-  margin-top: auto;
 }
-
 .price {
   color: #A43434;
   font-weight: bold;
 }
-
 .buy-btn {
-  background-color: #A43434;
-  color: #fff;
-  padding: 6px 12px;
+  background: #A43434;
+  color: white;
   border: none;
   border-radius: 8px;
-  font-size: 14px;
+  padding: 6px 12px;
+  cursor: pointer;
 }
 
+/* Arrow buttons */
 .nav-btn {
-  background-color: #fff;
-  border-radius: 50%;
+  background: white;
   border: 1px solid #ddd;
+  border-radius: 50%;
   width: 36px;
   height: 36px;
   cursor: pointer;
 }
 .left {
-  margin-right: 10px;
-}
-.right {
   margin-left: 10px;
 }
+.right {
+  margin-right: 10px;
+}
 
-/* Laris Manis */
+/* Laris Manis Section */
 .laris-section {
   background: linear-gradient(to right, #A43434, #3e1414);
   padding: 40px 20px;
   color: white;
-  margin: 60px auto;
-  max-width: 100%;
-  overflow: hidden;
+  margin: 60px 0;
 }
-
 .laris-text {
   max-width: 300px;
   float: left;
   margin-right: 30px;
   margin-top: 80px;
 }
-
-.laris-text h2 {
-  font-size: 28px;
-  margin-bottom: 10px;
-  font-weight: bold;
-}
-
-.laris-text p {
-  font-size: 14px;
-  color: #f0f0f0;
-}
-
 .laris-slider-wrapper {
-  overflow-x: auto;
+  overflow-x: hidden;
   white-space: nowrap;
   padding-top: 10px;
   margin-top: 10px;
 }
-
 .laris-slider {
   display: flex;
   gap: 20px;
-  transition: transform 0.3s ease;
+  animation: moveLaris 15s linear infinite;
 }
-
 .laris-card {
   background: white;
   color: black;
-  border-radius: 16px;
-  width: 250px;
-  min-width: 250px;
-  display: inline-block;
-  vertical-align: top;
-  overflow: hidden;
+  border-radius: 12px;
+  padding: 10px;
+  text-align: center;
+  width: 200px;
+  flex-shrink: 0;
 }
-
-.laris-img {
+.laris-card img {
   width: 100%;
   height: 140px;
   object-fit: cover;
+  border-radius: 12px;
 }
-
 .laris-info {
-  padding: 12px;
+  padding-top: 10px;
 }
-
 .laris-info h3 {
   font-size: 16px;
   font-weight: bold;
-  margin-bottom: 6px;
 }
-
-.organizer {
-  font-size: 13px;
-  font-weight: 500;
-  color: #555;
-  margin-bottom: 6px;
-}
-
 .laris-info p {
-  font-size: 12px;
+  font-size: 14px;
   color: #555;
-  margin: 2px 0;
+}
+@keyframes moveLaris {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
 }
 </style>
