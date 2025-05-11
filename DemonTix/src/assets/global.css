@@ -54,3 +54,7 @@ html, body, #app {
     background: var(--purple-dark);
     color:#fff;
   }
+  
+footer {
+  background: linear-gradient(to right, #7b1e1e, #5c0f0f);
+}
