@@ -1,14 +1,34 @@
 <template>
+<<<<<<< HEAD
   <div class="container my-5">
     <!-- Carousel (opsional pakai library seperti Swiper / Bootstrap carousel) -->
     <div class="mb-5">
       <div class="carousel-placeholder text-center">
         <!-- Ganti dengan carousel sebenarnya -->
         <p>[Carousel Event Promo]</p>
+=======
+  <div class="home-page">
+    <!-- Carousel Banner -->
+    <div class="carousel-container">
+      <div class="slides" :style="{ transform: `translateX(-${currentIndex * 100}%)` }">
+        <div class="slide" v-for="(banner, index) in banners" :key="index">
+          <img :src="banner" :alt="'Banner ' + (index + 1)" />
+        </div>
+      </div>
+      <div class="dots">
+        <span
+          v-for="(dot, index) in banners"
+          :key="index"
+          class="dot"
+          :class="{ active: index === currentIndex }"
+          @click="goToSlide(index)"
+        ></span>
+>>>>>>> cc8566dd2e227f87d0be592f945ef2edbc59bf55
       </div>
     </div>
 
     <!-- Rekomendasi Event -->
+<<<<<<< HEAD
     <section class="mb-5">
       <h4 class="fw-bold mb-4">Rekomendasi Event</h4>
       <div class="row g-3">
@@ -54,10 +74,63 @@
         <button class="btn btn-outline-danger">Lihat Lainnya</button>
       </div>
     </section>
+=======
+    <div class="event-section">
+      <h2 class="section-title">Rekomendasi Event</h2>
+      <div class="event-carousel">
+        <button @click="prevSlide" class="nav-btn left">&#8592;</button>
+
+        <div class="event-cards-wrapper">
+          <div class="event-cards" :style="{ transform: `translateX(-${currentEventIndex * (cardWidth + gap)}px)` }">
+            <div v-for="(event, index) in events" :key="index" class="event-card">
+              <img :src="event.image" alt="Event" />
+              <h3>{{ event.title }}</h3>
+              <div class="event-info">
+                <p><i class="fa fa-calendar"></i> {{ event.date }}</p>
+                <p><i class="fa fa-map-marker"></i> {{ event.location }}</p>
+              </div>
+              <div class="event-footer">
+                <span class="price">Rp {{ event.price }}</span>
+                <button class="buy-btn">Beli Tiket</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button @click="nextSlide" class="nav-btn right">&#8594;</button>
+      </div>
+    </div>
+
+    <!-- Laris Manis Section (Tidak Diubah) -->
+    <div class="laris-section">
+      <div class="laris-text">
+        <h2>Laris Manis!</h2>
+        <p>Kumpulan event-event laris manis di Artatix yang mungkin kamu sukai.</p>
+      </div>
+      <div class="laris-slider-wrapper">
+        <div class="laris-slider">
+          <div
+            v-for="(event, index) in larisEvents"
+            :key="index"
+            class="laris-card"
+          >
+            <img :src="event.image" class="laris-img" />
+            <div class="laris-info">
+              <h3>{{ event.title }}</h3>
+              <p class="organizer">{{ event.organizer }}</p>
+              <p><i class="fa fa-calendar"></i> {{ event.date }}</p>
+              <p><i class="fa fa-map-marker"></i> {{ event.location }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+>>>>>>> cc8566dd2e227f87d0be592f945ef2edbc59bf55
   </div>
 </template>
 
 <script setup>
+<<<<<<< HEAD
 import EventCard from "@/views/EventCard.vue";
 
 const rekomendasi = [
@@ -150,3 +223,265 @@ const terdekat = [
   // Tambahkan lainnya...
 ];
 </script>
+=======
+import { ref, onMounted, onUnmounted } from 'vue'
+
+/* Banner Logic */
+const banners = ['/banner1.png', '/banner2.png', '/banner3.png']
+const currentIndex = ref(0)
+let bannerInterval = null
+
+const goToSlide = (index) => {
+  currentIndex.value = index
+}
+const nextBannerSlide = () => {
+  currentIndex.value = (currentIndex.value + 1) % banners.length
+}
+
+onMounted(() => {
+  bannerInterval = setInterval(nextBannerSlide, 3000)
+})
+onUnmounted(() => {
+  clearInterval(bannerInterval)
+})
+
+/* Rekomendasi Event Carousel Logic */
+const events = [
+  { title: 'Event 1', date: '10 Mei 2025', location: 'Jakarta', price: '50.000', image: '/eventmusik1.png' },
+  { title: 'Event 2', date: '11 Mei 2025', location: 'Bandung', price: '75.000', image: '/eventolahraga1.png' },
+  { title: 'Event 3', date: '12 Mei 2025', location: 'Surabaya', price: '100.000', image: '/eventmusik2.png' },
+  { title: 'Event 4', date: '13 Mei 2025', location: 'Yogyakarta', price: '60.000', image: '/eventolahraga2.jpeg' },
+  { title: 'Event 5', date: '14 Mei 2025', location: 'Bali', price: '120.000', image: '/eventmusik1.png' },
+  { title: 'Event 6', date: '15 Mei 2025', location: 'Lombok', price: '90.000', image: '/eventmusik2.png' },
+  { title: 'Event 1', date: '10 Mei 2025', location: 'Jakarta', price: '50.000', image: '/eventmusik1.png' },
+  { title: 'Event 2', date: '11 Mei 2025', location: 'Bandung', price: '75.000', image: '/eventolahraga1.png' },
+  { title: 'Event 3', date: '12 Mei 2025', location: 'Surabaya', price: '100.000', image: '/eventmusik2.png' },
+  { title: 'Event 4', date: '13 Mei 2025', location: 'Yogyakarta', price: '60.000', image: '/eventolahraga2.jpeg' },
+  { title: 'Event 5', date: '14 Mei 2025', location: 'Bali', price: '120.000', image: '/eventmusik1.png' },
+  { title: 'Event 6', date: '15 Mei 2025', location: 'Lombok', price: '90.000', image: '/eventmusik2.png' },
+]
+
+const currentEventIndex = ref(0)
+const cardWidth = 240
+const gap = 20
+const maxIndex = events.length - 4
+
+const nextSlide = () => {
+  if (currentEventIndex.value < maxIndex) {
+    currentEventIndex.value++
+  }
+}
+
+const prevSlide = () => {
+  if (currentEventIndex.value > 0) {
+    currentEventIndex.value--
+  }
+}
+
+/* Laris Manis Events */
+const larisEvents = [
+  { title: "LAND OF KOPLO", organizer: "TWENTY THREE ENTERTAINMENT", date: "24 May 2025", location: "Stadion Kridosono", image: "/eventmusik1.png" },
+  { title: "Pesta Mangan", organizer: "Pesta Mangan", date: "30 - 01 Jun 2025", location: "Alun-alun Kota Serang", image: "/eventmusik2.png" },
+  { title: "Story in Garut", organizer: "One Night Project", date: "17 May 2025", location: "Lapangan Korem Garut", image: "/eventolahraga2.jpeg" },
+  { title: "LAND OF KOPLO", organizer: "TWENTY THREE ENTERTAINMENT", date: "24 May 2025", location: "Stadion Kridosono", image: "/eventmusik1.png" },
+  { title: "Pesta Mangan", organizer: "Pesta Mangan", date: "30 - 01 Jun 2025", location: "Alun-alun Kota Serang", image: "/eventmusik2.png" },
+  { title: "Story in Garut", organizer: "One Night Project", date: "17 May 2025", location: "Lapangan Korem Garut", image: "/eventolahraga2.jpeg" }
+]
+</script>
+
+<style scoped>
+.home-page {
+  font-family: Arial, sans-serif;
+  background: #f5f5f5;
+}
+
+/* Carousel */
+.carousel-container {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+  margin-bottom: 40px;
+  border-radius: 16px;
+}
+.slides {
+  display: flex;
+  transition: transform 0.5s ease;
+}
+.slide {
+  min-width: 100%;
+}
+.slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 16px;
+}
+.dots {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.dot {
+  height: 10px;
+  width: 10px;
+  margin: 0 5px;
+  background: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  cursor: pointer;
+}
+.dot.active {
+  background: #333;
+}
+
+/* Event Section */
+.event-section {
+ margin: 40px 20px;
+} 
+
+.section-title {
+  margin-left: 490px;
+  margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: bold;
+}
+.event-carousel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin: 30px 0;
+}
+.event-cards-wrapper {
+  overflow: hidden;
+  width: 1000px;
+}
+.event-cards {
+  display: flex;
+  transition: transform 0.4s ease-in-out;
+}
+.event-card {
+  background: white;
+  border-radius: 16px;
+  width: 240px;
+  margin-right: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  flex-shrink: 0;
+}
+.event-card img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+}
+.event-card h3 {
+  padding: 12px 16px 4px;
+  font-size: 16px;
+  font-weight: bold;
+}
+.event-info {
+  padding: 0 16px;
+  font-size: 12px;
+  color: #666;
+}
+.event-info p {
+  margin: 4px 0;
+}
+.event-footer {
+  padding: 12px 16px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.price {
+  color: #A43434;
+  font-weight: bold;
+}
+.buy-btn {
+  background: #A43434;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+/* Arrow buttons */
+.nav-btn {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+}
+.left {
+  margin-left: 10px;
+}
+.right {
+  margin-right: 10px;
+}
+
+/* Laris Manis Section */
+.laris-section {
+  background: linear-gradient(to right, #A43434, #3e1414);
+  padding: 40px 20px;
+  color: white;
+  margin: 60px 0;
+}
+.laris-text {
+  max-width: 300px;
+  float: left;
+  margin-right: 30px;
+  margin-top: 80px;
+}
+.laris-slider-wrapper {
+  overflow-x: hidden;
+  white-space: nowrap;
+  padding-top: 10px;
+  margin-top: 10px;
+}
+.laris-slider {
+  display: flex;
+  gap: 20px;
+  animation: moveLaris 15s linear infinite;
+}
+.laris-card {
+  background: white;
+  color: black;
+  border-radius: 12px;
+  padding: 10px;
+  text-align: center;
+  width: 200px;
+  flex-shrink: 0;
+}
+.laris-card img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+.laris-info {
+  padding-top: 10px;
+}
+.laris-info h3 {
+  font-size: 16px;
+  font-weight: bold;
+}
+.laris-info p {
+  font-size: 14px;
+  color: #555;
+}
+@keyframes moveLaris {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+</style>
+>>>>>>> cc8566dd2e227f87d0be592f945ef2edbc59bf55
