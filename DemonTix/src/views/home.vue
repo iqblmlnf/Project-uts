@@ -65,6 +65,10 @@
               <p><i class="fa fa-calendar"></i> {{ event.date }}</p>
               <p><i class="fa fa-map-marker"></i> {{ event.location }}</p>
             </div>
+            <div class="event-footer">
+              <span class="price">Rp {{ event.price }}</span>
+              <button class="buy-btn">Beli Tiket</button>
+            </div>
           </div>
         </div>
       </div>
@@ -129,12 +133,18 @@ const prevSlide = () => {
 
 /* Laris Manis Events */
 const larisEvents = [
-  { title: "LAND OF KOPLO", organizer: "TWENTY THREE ENTERTAINMENT", date: "24 May 2025", location: "Stadion Kridosono", image: "/eventmusik1.png" },
-  { title: "Pesta Mangan", organizer: "Pesta Mangan", date: "30 - 01 Jun 2025", location: "Alun-alun Kota Serang", image: "/eventmusik2.png" },
-  { title: "Story in Garut", organizer: "One Night Project", date: "17 May 2025", location: "Lapangan Korem Garut", image: "/eventolahraga2.jpeg" },
-  { title: "LAND OF KOPLO", organizer: "TWENTY THREE ENTERTAINMENT", date: "24 May 2025", location: "Stadion Kridosono", image: "/eventmusik1.png" },
-  { title: "Pesta Mangan", organizer: "Pesta Mangan", date: "30 - 01 Jun 2025", location: "Alun-alun Kota Serang", image: "/eventmusik2.png" },
-  { title: "Story in Garut", organizer: "One Night Project", date: "17 May 2025", location: "Lapangan Korem Garut", image: "/eventolahraga2.jpeg" }
+   { title: 'Event 1', date: '10 Mei 2025', location: 'Jakarta', price: '50.000', image: '/eventmusik1.png' },
+  { title: 'Event 2', date: '11 Mei 2025', location: 'Bandung', price: '75.000', image: '/eventolahraga1.png' },
+  { title: 'Event 3', date: '12 Mei 2025', location: 'Surabaya', price: '100.000', image: '/eventmusik2.png' },
+  { title: 'Event 4', date: '13 Mei 2025', location: 'Yogyakarta', price: '60.000', image: '/eventolahraga2.jpeg' },
+  { title: 'Event 5', date: '14 Mei 2025', location: 'Bali', price: '120.000', image: '/eventmusik1.png' },
+  { title: 'Event 6', date: '15 Mei 2025', location: 'Lombok', price: '90.000', image: '/eventmusik2.png' },
+  { title: 'Event 1', date: '10 Mei 2025', location: 'Jakarta', price: '50.000', image: '/eventmusik1.png' },
+  { title: 'Event 2', date: '11 Mei 2025', location: 'Bandung', price: '75.000', image: '/eventolahraga1.png' },
+  { title: 'Event 3', date: '12 Mei 2025', location: 'Surabaya', price: '100.000', image: '/eventmusik2.png' },
+  { title: 'Event 4', date: '13 Mei 2025', location: 'Yogyakarta', price: '60.000', image: '/eventolahraga2.jpeg' },
+  { title: 'Event 5', date: '14 Mei 2025', location: 'Bali', price: '120.000', image: '/eventmusik1.png' },
+  { title: 'Event 6', date: '15 Mei 2025', location: 'Lombok', price: '90.000', image: '/eventmusik2.png' }
 ]
 </script>
 
