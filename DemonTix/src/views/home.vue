@@ -127,22 +127,29 @@ const events = [
     date: '30 Jul 2025',
     location: 'Lokasi Baru',
     price: '99.000',
-    image: '/eventbaru.png',
+    image: '/banner1.png',
   },
   {
     title: 'NEW EVENT 2025',
     date: '30 Jul 2025',
     location: 'Lokasi Baru',
     price: '99.000',
-    image: '/eventbaru.png',
+    image: '/banner2.png',
   },
   {
     title: 'NEW EVENT 2025',
     date: '30 Jul 2025',
     location: 'Lokasi Baru',
     price: '99.000',
-    image: '/eventbaru.png',
+    image: '/banner3.png',
   },
+  {
+    title: 'NEW EVENT 2025',
+    date: '30 Jul 2025',
+    location: 'Lokasi Baru',
+    price: '99.000',
+    image: '/banner4.png',
+  }
 ]
 
 const nextSlideEvent = () => {
