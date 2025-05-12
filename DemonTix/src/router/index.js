@@ -5,7 +5,8 @@ import Tim          from '@/views/Tim.vue'
 import Contact      from '@/views/Contact.vue'
 import EventDetail  from '@/views/EventDetail.vue' 
 import Syarat       from '@/views/SyaratKetentuan.vue'
-import FAQ          from '@/views/FAQ.vue';
+import FAQ          from '@/views/FAQ.vue'
+import TicketCheckout from '@/views/TicketCheckout.vue';
 
 const routes = [
     { path: '/',          name: 'Home',    component: Home },
@@ -15,6 +16,7 @@ const routes = [
     { path: '/event/:title', name: 'EventDetail', component: EventDetail, props: true },
     { path: '/syarat-ketentuan', name: 'SyaratKetentuan', component: Syarat, props: true },
     { path: '/faq', name: 'FAQ', component: FAQ, props: true },
+    { path: '/ticket-checkout/:eventId', name: 'TicketCheckout', component: TicketCheckout, props: true }
 ]
 
 export default createRouter({

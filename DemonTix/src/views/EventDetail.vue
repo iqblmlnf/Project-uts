@@ -82,7 +82,6 @@
         </div>
 
         <!-- Tab Tiket -->
-         <div v-if="currentTab === 'tiket'" class="tab-content">
         <div class="card-tiket">
           <div class="info">
             <div class="col-8 p-0 ticket-name">
@@ -100,6 +99,7 @@
             </div>
           </div>
           <div>
+            <div v-if="currentTab === 'tiket'" class="tab-content">
               <p><strong>Presale 1</strong></p>
               <p>Include tax 11%</p>
             </div>
@@ -170,7 +170,9 @@
             <span>Halaman Gedung Sultan Suriansyah</span>
           </div>
         </div>
-        <button class="buy-button">Beli Tiket</button>
+        <router-link to="/ticket-checkout/:eventId" class="buy-button-link">
+        <button class="buy-button">Beli Tiket</button></router-link>
+
       </div>
     </div>
   </main>
@@ -226,6 +228,7 @@ const decrement = (ticketType) => {
 .info {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   align-items: center;
 }
 .card-tiket {
