@@ -66,21 +66,6 @@
   cursor: pointer;
 }
 
-<<<<<<< HEAD
-  img {
-    width: 30px;
-    margin-left: 50px;
-  }
-  
-  /* --- Footer --- */
-  .footer-purple{
-    background: var(--purple-dark);
-    color:#fff;
-  }
-  
-footer {
-  background: linear-gradient(to right, #7b1e1e, #5c0f0f);
-=======
 /* --- Footer --- */
 .footer {
   background: linear-gradient(to right, #A43434, #3e1414);
@@ -178,5 +163,4 @@ footer {
 
 .footer-bottom p {
   font-size: 0.85rem;
->>>>>>> cc8566dd2e227f87d0be592f945ef2edbc59bf55
 }

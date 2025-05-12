@@ -1,16 +1,8 @@
 <template>
-<<<<<<< HEAD
-  <div class="container my-5">
-    <!-- Carousel (opsional pakai library seperti Swiper / Bootstrap carousel) -->
-    <div class="mb-5">
-      <div class="carousel-placeholder text-center">
-        <!-- Ganti dengan carousel sebenarnya -->
-        <p>[Carousel Event Promo]</p>
-=======
   <div class="home-page">
     <!-- Carousel Banner -->
     <div class="carousel-container">
-      <div class="slides" :style="{ transform: `translateX(-${currentIndex * 100}%)` }">
+      <div class="slides" :style="{ transform: 'translateX(-' + currentIndex * 100 + '%)' }">
         <div class="slide" v-for="(banner, index) in banners" :key="index">
           <img :src="banner" :alt="'Banner ' + (index + 1)" />
         </div>
@@ -23,65 +15,18 @@
           :class="{ active: index === currentIndex }"
           @click="goToSlide(index)"
         ></span>
->>>>>>> cc8566dd2e227f87d0be592f945ef2edbc59bf55
       </div>
     </div>
 
     <!-- Rekomendasi Event -->
-<<<<<<< HEAD
-    <section class="mb-5">
-      <h4 class="fw-bold mb-4">Rekomendasi Event</h4>
-      <div class="row g-3">
-        <EventCard
-          v-for="(event, index) in rekomendasi"
-          :key="'reko' + index"
-          :event="event"
-        />
-      </div>
-    </section>
 
-    <!-- Event Terlaris -->
-    <section
-      class="py-5 text-white"
-      style="background: linear-gradient(to right, #8b0000, #a52a2a)"
-    >
-      <div class="container">
-        <h4 class="fw-bold mb-3">Terlaris!</h4>
-        <p>
-          Kumpulan event-event terlaris di Demontix yang mungkin kamu sukai.
-        </p>
-        <div class="row g-3 mt-3">
-          <EventCard
-            v-for="(event, index) in terlaris"
-            :key="'hot' + index"
-            :event="event"
-          />
-        </div>
-      </div>
-    </section>
-
-    <!-- Event Terdekat -->
-    <section class="my-5">
-      <h4 class="fw-bold mb-4">Event Terdekat</h4>
-      <div class="row g-3">
-        <EventCard
-          v-for="(event, index) in terdekat"
-          :key="'near' + index"
-          :event="event"
-        />
-      </div>
-      <div class="text-center mt-4">
-        <button class="btn btn-outline-danger">Lihat Lainnya</button>
-      </div>
-    </section>
-=======
     <div class="event-section">
       <h2 class="section-title">Rekomendasi Event</h2>
       <div class="event-carousel">
         <button @click="prevSlide" class="nav-btn left">&#8592;</button>
 
         <div class="event-cards-wrapper">
-          <div class="event-cards" :style="{ transform: `translateX(-${currentEventIndex * (cardWidth + gap)}px)` }">
+          <div class="event-cards" :style="{ transform: 'translateX(-' + currentEventIndex * (cardWidth + gap) + 'px)' }">
             <div v-for="(event, index) in events" :key="index" class="event-card">
               <img :src="event.image" alt="Event" />
               <h3>{{ event.title }}</h3>
@@ -91,7 +36,9 @@
               </div>
               <div class="event-footer">
                 <span class="price">Rp {{ event.price }}</span>
-                <button class="buy-btn">Beli Tiket</button>
+                <router-link
+                :to="{ name: 'EventDetail', params: { title: event.title } }"
+                class="buy-btn">Beli Tiket</router-link>
               </div>
             </div>
           </div>
@@ -121,109 +68,50 @@
               <p><i class="fa fa-calendar"></i> {{ event.date }}</p>
               <p><i class="fa fa-map-marker"></i> {{ event.location }}</p>
             </div>
+            <div class="event-footer">
+              <span class="price">Rp {{ event.price }}</span>
+              <router-link
+                :to="{ name: 'EventDetail', params: { title: event.title } }"
+                class="buy-btn">Beli Tiket</router-link>
+            </div>
           </div>
         </div>
       </div>
     </div>
->>>>>>> cc8566dd2e227f87d0be592f945ef2edbc59bf55
+
+    <!-- Event Terdekat -->
+<div class="event-terdekat-section">
+  <h2 class="section-title text-merah">Event Terdekat</h2>
+  <div class="grid-terdekat">
+    <div
+      v-for="(event, index) in terdekatEvents"
+      :key="index"
+      class="card-terdekat"
+    >
+      <img v-if="event.image" :src="event.image" alt="Poster" class="poster-img" />
+      <div v-else class="poster-placeholder"></div>
+      <div class="card-content">
+        <h3 class="judul-event">{{ event.title }}</h3>
+        <p class="info-text"> {{ event.date }}</p>
+        <p class="info-text"> {{ event.location }}</p>
+      </div>
+      <div class="card-footer">
+        <span class="harga">Rp {{ event.price }}</span>
+        <router-link
+                :to="{ name: 'EventDetail', params: { title: event.title } }"
+                class="buy-btn">Beli Tiket</router-link>
+      </div>
+    </div>
+  </div>
+  <div class="lihat-lainnya">
+    <button class="btn-lihat">Lihat Lainnya</button>
+  </div>
+</div>
   </div>
 </template>
 
 <script setup>
-<<<<<<< HEAD
-import EventCard from "@/views/EventCard.vue";
 
-const rekomendasi = [
-  {
-    title: "LAND OF KOPLO",
-    date: "26 Mei 2025",
-    place: "Stadion Kridosono, Yogyakarta",
-    price: 15000,
-  },
-  {
-    title: "Melangkah Bersama VOL 1",
-    date: "12 Mei 2025",
-    place: "JEC",
-    price: 25000,
-  },
-  {
-    title: "Melangkah Bersama VOL 1",
-    date: "12 Mei 2025",
-    place: "JEC",
-    price: 25000,
-  },
-  {
-    title: "Melangkah Bersama VOL 1",
-    date: "12 Mei 2025",
-    place: "JEC",
-    price: 25000,
-  },
-  {
-    title: "Melangkah Bersama VOL 1",
-    date: "12 Mei 2025",
-    place: "JEC",
-    price: 25000,
-  },
-  // Tambahkan lainnya...
-];
-
-const terlaris = [
-  {
-    title: "Melangkah Bersama VOL 1",
-    date: "12 Mei 2025",
-    place: "JEC",
-    price: 25000,
-  },
-  {
-    title: "Melangkah Bersama VOL 1",
-    date: "12 Mei 2025",
-    place: "JEC",
-    price: 25000,
-  },
-
-  {
-    title: "Melangkah Bersama VOL 1",
-    date: "12 Mei 2025",
-    place: "JEC",
-    price: 25000,
-  },
-
-  {
-    title: "Melangkah Bersama VOL 1",
-    date: "12 Mei 2025",
-    place: "JEC",
-    price: 25000,
-  },
-
-  {
-    title: "Melangkah Bersama VOL 1",
-    date: "12 Mei 2025",
-    place: "JEC",
-    price: 25000,
-  },
-
-  // Tambahkan lainnya...
-];
-
-const terdekat = [
-  { title: "Soundsekrta", date: "8 Mei 2025", place: "JEC", price: 25000 },
-  { title: "Anime Fest", date: "9 Mei 2025", place: "JEC", price: 25000 },
-  { title: "Soundsekrta", date: "8 Mei 2025", place: "JEC", price: 25000 },
-  { title: "Anime Fest", date: "9 Mei 2025", place: "JEC", price: 25000 },
-  { title: "Soundsekrta", date: "8 Mei 2025", place: "JEC", price: 25000 },
-  { title: "Anime Fest", date: "9 Mei 2025", place: "JEC", price: 25000 },
-  { title: "Soundsekrta", date: "8 Mei 2025", place: "JEC", price: 25000 },
-  { title: "Anime Fest", date: "9 Mei 2025", place: "JEC", price: 25000 },
-  { title: "Soundsekrta", date: "8 Mei 2025", place: "JEC", price: 25000 },
-  { title: "Anime Fest", date: "9 Mei 2025", place: "JEC", price: 25000 },
-  { title: "Soundsekrta", date: "8 Mei 2025", place: "JEC", price: 25000 },
-  { title: "Anime Fest", date: "9 Mei 2025", place: "JEC", price: 25000 },
-  { title: "Soundsekrta", date: "8 Mei 2025", place: "JEC", price: 25000 },
-  { title: "Anime Fest", date: "9 Mei 2025", place: "JEC", price: 25000 },
-  // Tambahkan lainnya...
-];
-</script>
-=======
 import { ref, onMounted, onUnmounted } from 'vue'
 
 /* Banner Logic */
@@ -280,13 +168,35 @@ const prevSlide = () => {
 
 /* Laris Manis Events */
 const larisEvents = [
-  { title: "LAND OF KOPLO", organizer: "TWENTY THREE ENTERTAINMENT", date: "24 May 2025", location: "Stadion Kridosono", image: "/eventmusik1.png" },
-  { title: "Pesta Mangan", organizer: "Pesta Mangan", date: "30 - 01 Jun 2025", location: "Alun-alun Kota Serang", image: "/eventmusik2.png" },
-  { title: "Story in Garut", organizer: "One Night Project", date: "17 May 2025", location: "Lapangan Korem Garut", image: "/eventolahraga2.jpeg" },
-  { title: "LAND OF KOPLO", organizer: "TWENTY THREE ENTERTAINMENT", date: "24 May 2025", location: "Stadion Kridosono", image: "/eventmusik1.png" },
-  { title: "Pesta Mangan", organizer: "Pesta Mangan", date: "30 - 01 Jun 2025", location: "Alun-alun Kota Serang", image: "/eventmusik2.png" },
-  { title: "Story in Garut", organizer: "One Night Project", date: "17 May 2025", location: "Lapangan Korem Garut", image: "/eventolahraga2.jpeg" }
+   { title: 'Event 1', date: '10 Mei 2025', location: 'Jakarta', price: '50.000', image: '/eventmusik1.png' },
+  { title: 'Event 2', date: '11 Mei 2025', location: 'Bandung', price: '75.000', image: '/eventolahraga1.png' },
+  { title: 'Event 3', date: '12 Mei 2025', location: 'Surabaya', price: '100.000', image: '/eventmusik2.png' },
+  { title: 'Event 4', date: '13 Mei 2025', location: 'Yogyakarta', price: '60.000', image: '/eventolahraga2.jpeg' },
+  { title: 'Event 5', date: '14 Mei 2025', location: 'Bali', price: '120.000', image: '/eventmusik1.png' },
+  { title: 'Event 6', date: '15 Mei 2025', location: 'Lombok', price: '90.000', image: '/eventmusik2.png' },
+  { title: 'Event 1', date: '10 Mei 2025', location: 'Jakarta', price: '50.000', image: '/eventmusik1.png' },
+  { title: 'Event 2', date: '11 Mei 2025', location: 'Bandung', price: '75.000', image: '/eventolahraga1.png' },
+  { title: 'Event 3', date: '12 Mei 2025', location: 'Surabaya', price: '100.000', image: '/eventmusik2.png' },
+  { title: 'Event 4', date: '13 Mei 2025', location: 'Yogyakarta', price: '60.000', image: '/eventolahraga2.jpeg' },
+  { title: 'Event 5', date: '14 Mei 2025', location: 'Bali', price: '120.000', image: '/eventmusik1.png' },
+  { title: 'Event 6', date: '15 Mei 2025', location: 'Lombok', price: '90.000', image: '/eventmusik2.png' }
 ]
+
+const terdekatEvents = [
+  { title: 'Event 1', date: '10 Mei 2025', location: 'Jakarta', price: '50.000', image: '/eventmusik1.png' },
+  { title: 'Event 2', date: '11 Mei 2025', location: 'Bandung', price: '75.000', image: '/eventolahraga1.png' },
+  { title: 'Event 3', date: '12 Mei 2025', location: 'Surabaya', price: '100.000', image: '/eventmusik2.png' },
+  { title: 'Event 4', date: '13 Mei 2025', location: 'Yogyakarta', price: '60.000', image: '/eventolahraga2.jpeg' },
+  { title: 'Event 5', date: '14 Mei 2025', location: 'Bali', price: '120.000', image: '/eventmusik1.png' },
+  { title: 'Event 6', date: '15 Mei 2025', location: 'Lombok', price: '90.000', image: '/eventmusik2.png' },
+  { title: 'Event 1', date: '10 Mei 2025', location: 'Jakarta', price: '50.000', image: '/eventmusik1.png' },
+  { title: 'Event 2', date: '11 Mei 2025', location: 'Bandung', price: '75.000', image: '/eventolahraga1.png' },
+  { title: 'Event 3', date: '12 Mei 2025', location: 'Surabaya', price: '100.000', image: '/eventmusik2.png' },
+  { title: 'Event 4', date: '13 Mei 2025', location: 'Yogyakarta', price: '60.000', image: '/eventolahraga2.jpeg' },
+  { title: 'Event 5', date: '14 Mei 2025', location: 'Bali', price: '120.000', image: '/eventmusik1.png' },
+  { title: 'Event 6', date: '15 Mei 2025', location: 'Lombok', price: '90.000', image: '/eventmusik2.png' }
+]
+
 </script>
 
 <style scoped>
@@ -301,7 +211,8 @@ const larisEvents = [
   width: 100%;
   height: 400px;
   overflow: hidden;
-  margin-bottom: 40px;
+  margin-top: 20px;  /* jarak dari navbar */
+  margin-bottom: 20px;
   border-radius: 16px;
 }
 .slides {
@@ -317,24 +228,6 @@ const larisEvents = [
   object-fit: cover;
   border-radius: 16px;
 }
-.dots {
-  position: absolute;
-  bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-.dot {
-  height: 10px;
-  width: 10px;
-  margin: 0 5px;
-  background: #bbb;
-  border-radius: 50%;
-  display: inline-block;
-  cursor: pointer;
-}
-.dot.active {
-  background: #333;
-}
 
 /* Event Section */
 .event-section {
@@ -342,7 +235,7 @@ const larisEvents = [
 } 
 
 .section-title {
-  margin-left: 490px;
+  margin-left: 230px;
   margin-bottom: 20px;
   font-size: 24px;
   font-weight: bold;
@@ -438,6 +331,11 @@ const larisEvents = [
   margin-right: 30px;
   margin-top: 80px;
 }
+
+.laris-text h2{
+  font-weight: bold;
+}
+
 .laris-slider-wrapper {
   overflow-x: hidden;
   white-space: nowrap;
@@ -451,30 +349,154 @@ const larisEvents = [
 }
 .laris-card {
   background: white;
-  color: black;
-  border-radius: 12px;
-  padding: 10px;
-  text-align: center;
-  width: 200px;
+  border-radius: 16px;
+  width: 240px;
+  margin-right: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   flex-shrink: 0;
 }
 .laris-card img {
   width: 100%;
   height: 140px;
   object-fit: cover;
-  border-radius: 12px;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
 }
 .laris-info {
-  padding-top: 10px;
+  padding: 0 16px;
+  font-size: 12px;
+  color: #000000;
+
 }
 .laris-info h3 {
+  padding: 12px 0px 4px;
+  font-size: 16px;
+  font-weight: bold;
+
+}
+.laris-info p {
+  margin: 4px 0;
+}
+
+/* event terdekat Section */
+
+.event-terdekat-section {
+  margin: 40px 20px;
+}
+
+.text-merah {
+  margin-left: 150px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #A43434;
+  margin-bottom: 20px;
+}
+
+.grid-terdekat {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin: 0 230px 20px;
+}
+
+.card-terdekat {
+  background: white;
+  border-radius: 16px;
+  width: 270px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  flex-shrink: 0;
+  
+}
+
+.poster-img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+}
+
+.poster-placeholder {
+  background: #e5e5e5;
+  height: 120px;
+}
+
+.card-content {
+  padding: 10px 12px;
+  flex: 1;
+}
+
+.judul-event {
+  padding: 12px 0px 4px;
   font-size: 16px;
   font-weight: bold;
 }
-.laris-info p {
-  font-size: 14px;
-  color: #555;
+
+.info-text {
+  font-size: 12px;
+  color: #666;
+  margin: 2px 0;
 }
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+}
+
+.harga {
+  font-weight: bold;
+  color: #A43434;
+  font-size: 14px;
+}
+
+.btn-terdekat {
+  background: #A43434;
+  color: white;
+  padding: 6px 12px;
+  font-size: 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.lihat-lainnya {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.btn-lihat {
+  border: 1px solid #A43434;
+  color: #A43434;
+  padding: 6px 16px;
+  background: transparent;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.event-footer {
+  padding: 12px 16px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.price {
+  color: #A43434;
+  font-weight: bold;
+}
+
+.buy-btn {
+  background: #A43434;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
 @keyframes moveLaris {
   0% {
     transform: translateX(100%);
@@ -484,4 +506,3 @@ const larisEvents = [
   }
 }
 </style>
->>>>>>> cc8566dd2e227f87d0be592f945ef2edbc59bf55
