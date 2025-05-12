@@ -82,6 +82,7 @@
         </div>
 
         <!-- Tab Tiket -->
+         <div v-if="currentTab === 'tiket'" class="tab-content">
         <div class="card-tiket">
           <div class="info">
             <div class="col-8 p-0 ticket-name">
@@ -99,7 +100,6 @@
             </div>
           </div>
           <div>
-            <div v-if="currentTab === 'tiket'" class="tab-content">
               <p><strong>Presale 1</strong></p>
               <p>Include tax 11%</p>
             </div>
@@ -226,7 +226,6 @@ const decrement = (ticketType) => {
 .info {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   align-items: center;
 }
 .card-tiket {
