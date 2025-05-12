@@ -26,7 +26,8 @@
           </div>
           <div class="creator_instagram">
             <div class="instagram_logo">
-              <i class="bi bi-instagram"></i><label for>Instagram</label>
+              <i class="bi bi-instagram text-danger"></i
+              ><label for>Instagram</label>
             </div>
             <div class="instagram_profile">
               <a href="https://www.instagram.com/@rzlnggr_" target="_blank"
@@ -42,13 +43,17 @@
             @click="currentTab = 'deskripsi'"
             :class="{ 'active-tab': currentTab === 'deskripsi' }"
           >
-            <i class="bi bi-window-desktop"></i> Deskripsi
+            <span class="text-white" style="font-size: 12px">
+              <i class="bi bi-calendar-fill px-2"></i>Deskripsi
+            </span>
           </button>
           <button
             @click="currentTab = 'tiket'"
             :class="{ 'active-tab': currentTab === 'tiket' }"
           >
-            <i class="bi bi-ticket-detailed"></i> Tiket
+            <span class="text-white" style="font-size: 12px">
+              <i class="bi bi-ticket-perforated-fill px-1"></i> Tiket
+            </span>
           </button>
         </div>
 
@@ -82,62 +87,92 @@
         </div>
 
         <!-- Tab Tiket -->
-         <div v-if="currentTab === 'tiket'" class="tab-content">
-        <div class="card-tiket">
-          <div class="info">
-            <div class="col-8 p-0 ticket-name">
-              <span>Bundling - 3 Day Pass</span>
+        <div v-if="currentTab === 'tiket'" class="tab-content">
+          <div class="card-tiket">
+            <div class="info">
+              <div class="col-8 p-0 ticket-name">
+                <span>Bundling - 3 Day Pass</span>
+              </div>
+              <div class="col-4 p-0 ticket-status">
+                <span class="sold-out">Sold Out</span>
+              </div>
             </div>
-            <div class="col-4 p-0 ticket-status">
-              <span class="sold-out">Sold Out</span>
+            <hr style="border: 1px dashed #b0b0b0" />
+            <div class="ticket-order">
+              <div class="ticket-price">
+                <label for="" style="margin-bottom: 0px">Harga</label>
+                <span style="color: #f26419">Rp 100.000</span>
+              </div>
             </div>
           </div>
-          <hr style="border: 1px dashed #b0b0b0" />
-          <div class="ticket-order">
-            <div class="ticket-price">
-              <label for="" style="margin-bottom: 0px">Harga</label>
-              <span style="color: #F26419;">Rp 100.000</span>
-            </div>
-          </div>
-          <div>
-              <p><strong>Presale 1</strong></p>
-              <p>Include tax 11%</p>
-            </div>
-            <span class="sold-out">Sold Out</span>
-            <p class="price">Rp 184.000</p>
-          </div>
-          <div class="ticket">
-            <div>
-              <p><strong>Presale 2</strong></p>
-              <div class="nice-number">
-                <div class="nice-number">
-                  <button type="button" @click="decrement('presale2')">
-                    -
+          <div class="card-tiket">
+              <div class="info">
+                <div class="col-8 p-0 ticket-name">
+                  <span>Normal [2 Day Pass]</span>
+                </div>
+                <div class="col-4 p-0 ticket-status">
+                  <span class="onsale">On Sale</span>
+                </div>
+              </div>
+              <hr style="border: 1px dashed #b0b0b0" />
+              <div class="ticket-order">
+                <div class="ticket-price">
+                  <label for="">Harga</label>
+                  <span style="color: #f26419">Rp 1.000.000</span>
+                </div>
+                <div>
+                  <button
+                    class="btn-buy"
+                    v-if="selectedTicket !== 'TKT10247'"
+                    @click="toggleQtyInput('TKT10247')"
+                  >
+                    Pilih
                   </button>
-                  <input
-                    type="number"
-                    v-model="ticketCount.presale2"
-                    min="1"
-                    max="5"
-                    readonly
-                    style="width: 2ch"
-                  />
-                  <button type="button" @click="increment('presale2')">
-                    +
-                  </button>
+                  <div v-if="selectedTicket === 'TKT10247'" class="qty">
+                    <div class="nice-number">
+                      <button @click="decreaseQty('TKT10247')">-</button>
+                      <input
+                        type="number"
+                        v-model="ticketQty.TKT10247"
+                        min="1"
+                        max="5"
+                        style="width: 50px; text-align: center; font-size: 16px"
+                        :readonly="!isQtyEditable"
+                      />
+                      <button @click="increaseQty('TKT10247')">+</button>
+                    </div>
+                    <div class="btn-order py-2">
+                      <a
+                        href="javascript:void(0)"
+                        @click="cancelSelection"
+                        
+                      >
+                        Batal
+                      </a>
+                      <button @click="submitTicket('TKT10247')" class="btn-buy px-3 py-2">
+                        Beli
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-            <span class="sold-out">On Sale</span>
-            <p class="price">Rp 206.000</p>
-          </div>
-          <div class="ticket">
-            <div>
-              <p><strong>Reguler</strong></p>
-              <p>Include tax 11%</p>
+          <div class="card-tiket">
+            <div class="info">
+              <div class="col-8 p-0 ticket-name">
+                <span>Bundling - 3 Day Pass</span>
+              </div>
+              <div class="col-4 p-0 ticket-status">
+                <span class="sold-out">Sold Out</span>
+              </div>
             </div>
-            <span class="sold-out">On Sale</span>
-            <p class="price">Rp 222.000</p>
+            <hr style="border: 1px dashed #b0b0b0" />
+            <div class="ticket-order">
+              <div class="ticket-price">
+                <label for="" style="margin-bottom: 0px">Harga</label>
+                <span style="color: #f26419">Rp 100.000</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -170,7 +205,6 @@
             <span>Halaman Gedung Sultan Suriansyah</span>
           </div>
         </div>
-        <button class="buy-button">Beli Tiket</button>
       </div>
     </div>
   </main>
@@ -181,28 +215,81 @@ import { ref } from "vue";
 
 const currentTab = ref("deskripsi");
 
-// Mengatur jumlah tiket
-const ticketCount = ref({
-  presale2: 1,
-  reguler: 1,
+// To handle ticket selection and quantities
+// To handle ticket selection and quantities
+const selectedTicket = ref(null); // Tracks the selected ticket
+const ticketQty = ref({
+  TKT10247: 1, // Initial quantity for this ticket
 });
+const isQtyEditable = ref(true); // To control whether the quantity input is editable
 
-// Fungsi untuk menambah jumlah tiket
-const increment = (ticketType) => {
-  if (ticketCount.value[ticketType] < 5) {
-    ticketCount.value[ticketType] += 1;
+// Function to toggle the visibility of quantity input when "Pilih" is clicked
+const toggleQtyInput = (ticketId) => {
+  if (selectedTicket.value === ticketId) {
+    selectedTicket.value = null; // If the same ticket is clicked again, hide the input
+  } else {
+    selectedTicket.value = ticketId; // Otherwise, show the input for the selected ticket
   }
 };
 
-// Fungsi untuk mengurangi jumlah tiket
-const decrement = (ticketType) => {
-  if (ticketCount.value[ticketType] > 1) {
-    ticketCount.value[ticketType] -= 1;
+// Increase ticket quantity (limit to max of 5)
+const increaseQty = (ticketId) => {
+  if (ticketQty.value[ticketId] < 5) {
+    ticketQty.value[ticketId]++;
   }
+};
+
+// Decrease ticket quantity (limit to min of 1)
+const decreaseQty = (ticketId) => {
+  if (ticketQty.value[ticketId] > 1) {
+    ticketQty.value[ticketId]--;
+  }
+};
+
+// Cancel the ticket selection
+const cancelSelection = () => {
+  selectedTicket.value = null;
+};
+
+// Submit ticket selection (for now, just log the selected ticket and quantity)
+const submitTicket = (ticketId) => {
+  alert(
+    `Ticket ${ticketId} with quantity ${ticketQty.value[ticketId]} purchased!`
+  );
 };
 </script>
 
 <style scoped>
+.nice-number {
+  display: inline-flex;
+  justify-content: stretch;
+}
+
+.qty {
+  display: block;
+  text-align: right;
+  margin-top: 8px;
+}
+
+.btn-buy {
+  border: none;
+  border-radius: 8px;
+  background-color: #1f1f95;
+  color: #fff;
+  padding: 8px 24px;
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.onsale {
+  background-color: #e1ebfb;
+  color: #0066ff;
+  font-weight: 400;
+  font-size: 13px;
+  padding: 6px 10px;
+  border-radius: 8px;
+}
+
 .ticket-order {
   display: flex;
   flex-direction: row;
@@ -234,38 +321,30 @@ const decrement = (ticketType) => {
   border-radius: 14px;
   border: solid 1px #ebf1ff;
 }
-
-.nice-number input {
-  vertical-align: middle;
-  -moz-appearance: textfield;
-  box-sizing: content-box;
-  margin: 0;
-  text-align: center;
-}
-
-.nice-number button {
-  padding: 0 10px;
-  cursor: pointer;
-}
-
 .qty input {
-  width: 40px;
-  border-radius: 8px;
-  font-size: 14px;
+  width: 50px; /* Ensure input has a width */
+  text-align: center;
+  font-size: 16px;
   margin: 0 8px;
   padding: 6px;
-  border: none;
+  border-radius: 8px;
+  border: 1px solid #ccc;
   outline: none;
 }
 
-input:not(
-    [type="image" i],
-    [type="range" i],
-    [type="checkbox" i],
-    [type="radio" i]
-  ) {
-  overflow-clip-margin: 0px !important;
-  overflow: clip !important;
+button {
+    background-color: #fafafa;
+    border: none;
+    outline: none;
+    border-radius: 8px;
+    color: #1f1f95;
+    padding: 5px 12px;
+    font-weight: 500;
+}
+
+.btn-order {
+  display: flex;
+  justify-content: space-between;
 }
 .nice-number {
   display: inline-flex;
@@ -427,10 +506,10 @@ label {
 }
 .tab-buttons button {
   padding: 8px 8px;
-  background-color: #ccc;
+  background-color: #d79a9a;
   color: #fff;
   border: none;
-  border-radius: 15px;
+  border-radius: 18px;
   cursor: pointer;
   font-size: 13px;
   font: bold;
@@ -469,13 +548,5 @@ label {
   display: flex;
   gap: 8px;
   align-items: center;
-}
-.buy-button {
-  padding: 11px;
-  background-color: #922323;
-  color: #fff;
-  border: none;
-  border-radius: 13px;
-  cursor: pointer;
 }
 </style>
