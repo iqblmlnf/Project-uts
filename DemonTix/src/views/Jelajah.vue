@@ -58,15 +58,15 @@
     const searchQuery = ref('')
 
     const events = ref([
-    { title: 'KENDURI MUSIK FESTIVAL', date: '11 Mei 2025', location: 'Candi Prambanan', price: 25000, image: '/eventmusik1.png' },
-    { title: 'GROOVY MELODY 2025', date: '24 Mei 2025', location: 'Puncak Sosok', price: 35000, image: '/eventmusik2.png' },
-    { title: 'LAND OF KOPLO', date: '24 Mei 2025', location: 'Stadion Kridosono', price: 135000, image: '/eventolahraga1.png' },
-    { title: 'LAW SOEDIRMAN FUN RUN 2025', date: '15 Mei 2025', location: 'Fakultas Hukum UNSOED', price: 149000, image: '/eventolahraga2.jpeg' },
-    { title: 'DIRAYA FESTIVAL VOL.1', date: '14 Februari 2025', location: 'Stadion Kridosono', price: 165000, image: '/eventmusik1.png' },
-    { title: 'GALA MYSTICA 2025', date: '7 Juni 2025', location: 'Yogyakarta, Indonesia', price: 165000, image: '/eventmusik2.png' },
-    { title: 'COLOR AND BUBBLE RUN JOGJA', date: '29 Juni 2025', location: 'Trip Tap Toe', price: 225000, image: '/eventolahraga1.png' },
-    { title: 'REWARD', date: '5 Juli 2025', location: 'Lapangan Sawo Sido Mulyo, Sleman', price: 225000, image: '/eventolahraga2.jpeg' },
-    { title: 'FARMASI CUP 2025', date: '15 Februari 2025', location: 'Adispark, Yogyakarta', price: 225000, image: '/eventmusik2.png' },
+    { title: 'KENDURI MUSIK FESTIVAL', date: '11 Mei 2025', location: 'Candi Prambanan', price: '25.000', image: '/eventmusik1.png' },
+    { title: 'GROOVY MELODY 2025', date: '24 Mei 2025', location: 'Puncak Sosok', price: '35.000', image: '/eventmusik2.png' },
+    { title: 'LAND OF KOPLO', date: '24 Mei 2025', location: 'Stadion Kridosono', price: '135.000', image: '/eventolahraga1.png' },
+    { title: 'LAW SOEDIRMAN FUN RUN 2025', date: '15 Mei 2025', location: 'Fakultas Hukum UNSOED', price: '149.000', image: '/eventolahraga2.jpeg' },
+    { title: 'DIRAYA FESTIVAL VOL.1', date: '14 Februari 2025', location: 'Stadion Kridosono', price: '165.000', image: '/eventmusik1.png' },
+    { title: 'GALA MYSTICA 2025', date: '7 Juni 2025', location: 'Yogyakarta, Indonesia', price: '165.000', image: '/eventmusik2.png' },
+    { title: 'COLOR AND BUBBLE RUN JOGJA', date: '29 Juni 2025', location: 'Trip Tap Toe', price: '225.000', image: '/eventolahraga1.png' },
+    { title: 'REWARD', date: '5 Juli 2025', location: 'Lapangan Sawo Sido Mulyo, Sleman', price: '225.000', image: '/eventolahraga2.jpeg' },
+    { title: 'FARMASI CUP 2025', date: '15 Februari 2025', location: 'Adispark, Yogyakarta', price: '225.000', image: '/eventmusik2.png' },
     ])
 
     const filteredEvents = computed(() => {

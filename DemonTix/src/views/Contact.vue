@@ -66,7 +66,6 @@ const form = reactive({
 
 const submitForm = () => {
   alert(`Pesan dari ${form.nama} berhasil dikirim!`)
-  // Reset form jika diperlukan
   form.nama = ''
   form.email = ''
   form.subjek = ''

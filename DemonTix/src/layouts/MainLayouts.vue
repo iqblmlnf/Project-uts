@@ -34,6 +34,7 @@ const items = [
     <main class="page-content">
       <RouterView />
     </main>
+    
 
     <!-- Footer -->
     <footer class="footer">
@@ -57,12 +58,18 @@ const items = [
     </div>
 
     <!-- Kolom 2: Kategori -->
-    <div class="footer-middle">
+    <div class="footer-right">
       <h5>Kategori</h5>
       <ul>
-        <li>Musik</li>
-        <li>Olahraga</li>
-        <li>Wisata</li>
+        <li>
+              <RouterLink to="/jelajah" class="text-white hover:text-gray-300 transition">Musik</RouterLink>
+            </li>
+            <li>
+              <RouterLink to="/jelajah" class="text-white hover:text-gray-300 transition">Olahraga</RouterLink>
+            </li>
+            <li>
+              <RouterLink to="/jelajah" class="text-white hover:text-gray-300 transition">Seminar</RouterLink>
+            </li>
       </ul>
     </div>
 
@@ -71,10 +78,15 @@ const items = [
     <div class="footer-right">
       <h5>DemonTix</h5>
       <ul>
-        <li>Tentang Kami</li>
-        <li>Syarat & Ketentuan</li>
-        <li>FAQ</li>
-        <li>Tim</li>
+        <li>
+              <RouterLink to="/contact" class="text-white hover:text-gray-300 transition">Tentang Kami</RouterLink>
+            </li>
+            <li>
+              <RouterLink to="/syarat-ketentuan" class="text-white hover:text-gray-300 transition">Syarat & Ketentuan</RouterLink>
+            </li>
+            <li>
+              <RouterLink to="/faq" class="text-white hover:text-gray-300 transition">FAQ</RouterLink>
+            </li>
       </ul>
     </div>
   </div>
@@ -89,7 +101,6 @@ const items = [
     <p><strong>Copyright © 2025 UNIVERSITAS AMIKOM YOGYAKARTA</strong></p>
   </div> 
 </footer>
-
-
   </div>
 </template>
+
