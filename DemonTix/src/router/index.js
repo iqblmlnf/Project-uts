@@ -4,17 +4,15 @@ import Jelajah      from '@/views/Jelajah.vue'
 import Tim          from '@/views/Tim.vue'
 import Contact      from '@/views/Contact.vue'
 import EventDetail  from '@/views/EventDetail.vue' 
-import Syarat       from '@/views/SyaratKetentuan.vue'
-import FAQ          from '@/views/FAQ.vue';
+import Login        from '@/views/Login.vue';
 
 const routes = [
-    { path: '/',          name: 'Home',    component: Home },
-    { path: '/jelajah',name: 'Jelajah', component: Jelajah },
-    { path: '/tim',name: 'Tim', component: Tim },
-    { path: '/contact', name: 'Hubungi Kami', component: Contact},
-    { path: '/event/:title', name: 'EventDetail', component: EventDetail, props: true },
-    { path: '/syarat-ketentuan', name: 'SyaratKetentuan', component: Syarat, props: true },
-    { path: '/faq', name: 'FAQ', component: FAQ, props: true },
+    { path: '/',             name: 'Home',               component: Home },
+    { path: '/jelajah',      name: 'Jelajah',            component: Jelajah },
+    { path: '/tim',          name: 'Tim',                component: Tim },
+    { path: '/contact',      name: 'Hubungi Kami',       component: Contact},
+    { path: '/event/:title', name: 'EventDetail',        component: EventDetail, props: true },
+    { path: '/login',        name: 'Login',              component: Login}
 ]
 
 export default createRouter({

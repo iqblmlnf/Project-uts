@@ -5,7 +5,8 @@ const items = [
   { to: '/', name: 'Home' },
   { to: '/jelajah', name: 'Jelajah' },
   { to: '/tim', name: 'Team Project' },
-  { to: '/contact', name: 'Hubungi Kami' }
+  { to: '/contact', name: 'Hubungi Kami' },
+  {to:  '/login', name: 'Login'}
 ]
 </script>
 
@@ -26,7 +27,9 @@ const items = [
         <i class="fa-solid fa-magnifying-glass"></i>
           <input type="text" placeholder="search" />
         </div>
+        <router-link to="/login">
         <button class="login-btn">Login</button>
+      </router-link>
       </div>
     </nav>
 
