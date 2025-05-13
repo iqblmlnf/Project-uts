@@ -44,8 +44,8 @@
               <img :src="event.image" alt="Event" />
               <h3>{{ event.title }}</h3>
               <div class="event-info">
-                <p><i class="fa fa-calendar"></i> {{ event.date }}</p>
-                <p><i class="fa fa-map-marker"></i> {{ event.location }}</p>
+                <p>{{ event.date }}</p>
+                <p>{{ event.location }}</p>
               </div>
               <div class="event-footer">
                 <span class="price">Rp {{ event.price }}</span>
@@ -80,8 +80,8 @@
             <div class="laris-info">
               <h3>{{ event.title }}</h3>
               <p class="organizer">{{ event.organizer }}</p>
-              <p><i class="fa fa-calendar"></i> {{ event.date }}</p>
-              <p><i class="fa fa-map-marker"></i> {{ event.location }}</p>
+              <p>{{ event.date }}</p>
+              <p>{{ event.location }}</p>
             </div>
             <div class="event-footer">
               <span class="price">Rp {{ event.price }}</span>

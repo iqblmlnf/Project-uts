@@ -1,13 +1,22 @@
 <script setup>
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
 import MainLayout from '@/layouts/MainLayouts.vue'
+
+const route = useRoute()
+
+// Halaman-halaman yang tidak pakai layout
+const noLayoutRoutes = ['/login']
+const useLayout = computed(() => !noLayoutRoutes.includes(route.path))
 </script>
 
 <template>
-  
   <main>
-    <MainLayout />
+    <MainLayout v-if="useLayout" />
+    <router-view v-else />
   </main>
 </template>
+
 
 <style scoped>
 header {
