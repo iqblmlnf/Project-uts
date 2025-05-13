@@ -5,8 +5,7 @@ const items = [
   { to: '/', name: 'Home' },
   { to: '/jelajah', name: 'Jelajah' },
   { to: '/tim', name: 'Team Project' },
-  { to: '/contact', name: 'Hubungi Kami' },
-  {to:  '/login', name: 'Login'}
+  { to: '/contact', name: 'Hubungi Kami' }
 ]
 </script>
 
@@ -18,15 +17,11 @@ const items = [
         <img src="@/assets/logo.png" alt="Logo" class="logo" />
       </div>
 
-      <div class="navbar-center">
+      <div class="navbar-center gap-5">
         <RouterLink v-for="i in items" :key="i.to" class="nav-link" :to="i.to">{{ i.name }}</RouterLink>
       </div>
 
       <div class="navbar-right">
-        <div class="search-box">
-        <i class="fa-solid fa-magnifying-glass"></i>
-          <input type="text" placeholder="search" />
-        </div>
         <router-link to="/login">
         <button class="login-btn">Login</button>
       </router-link>
