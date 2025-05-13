@@ -1,17 +1,20 @@
 <template>
   <main class="container">
     <div class="badge">
-      <span><i class="bi bi-music-note-beamed px-2"></i>Musik</span>
+      <span
+        ><i class="bi bi-music-note-beamed px-2"></i
+        >{{ ticketData.category || "Musik" }}</span
+      >
     </div>
 
     <!-- Judul -->
-    <h1 class="title">BARAMIAN FEST 2025</h1>
+    <h1 class="title">{{ ticketData.title || "Detail Event" }}</h1>
 
     <div class="grid-container">
       <!-- Kiri -->
       <div class="left-content">
         <!-- Gambar -->
-        <img src="/eventmusik1.png" alt="Event Image" class="event-image" />
+        <img :src="ticketData.image || '/default.jpg'" />
 
         <!-- Penyelenggara -->
         <div class="event_creator">
@@ -21,18 +24,23 @@
             </div>
             <div class="creator_name">
               <label for>Penyelenggara</label>
-              <span>Hip Hop</span>
+              <span>{{ ticketData.organizer || "Hip Hop" }}</span>
             </div>
           </div>
           <div class="creator_instagram">
             <div class="instagram_logo">
-              <i class="bi bi-instagram text-danger"></i
-              ><label for>Instagram</label>
+              <i class="bi bi-instagram text-danger"></i>
+              <label for>Instagram</label>
             </div>
             <div class="instagram_profile">
-              <a href="https://www.instagram.com/@rzlnggr_" target="_blank"
-                >@rzalnggr_</a
+              <a
+                :href="
+                  ticketData.instagram || 'https://www.instagram.com/@rzlnggr_'
+                "
+                target="_blank"
               >
+                {{ ticketData.instagram || "@rzalnggr_" }}
+              </a>
             </div>
           </div>
         </div>
@@ -61,15 +69,7 @@
         <div v-if="currentTab === 'deskripsi'" class="tab-content">
           <h5>Deskripsi Event</h5>
           <div class="description-text">
-            <p>
-              Hiphop Soringin Festival 2025 adalah lanjutan dari Hiphop Soringin
-              #1, Hiphop Soringin #2, Hiphop Soringin #3, Hiphop Soringin
-              Festival 2024, dan Hiphop Soringin #5 yg sudah digelar sebelumnya.
-              <br />
-              Merupakan sebuah selebrasi Hiphop yang festive di Yogyakarta,
-              menampilkan pegiat Hiphop dari seluruh elemen baik rap, graffiti,
-              bboy, breakdance, dan DJ.
-            </p>
+            <p>{{ ticketData.description || "Deskripsi belum tersedia." }}</p>
           </div>
           <h5>Syarat dan Ketentuan</h5>
           <div class="description-text">
@@ -78,10 +78,8 @@
             </p>
             <p>2. Satu Entry Pass berlaku untuk satu orang.</p>
             <p>
-              3. Panitia dan Promotor tidak bertanggung jawab/ tidak ada
-              penggantian kerugian atas pembelian tiket acara melalui
-              calo/tempat/kanal/platform/yang bukan mitra resmi penjualan tiket
-              "Subculture Agression”.
+              3. Panitia dan Promotor tidak bertanggung jawab atas pembelian
+              tiket melalui pihak yang bukan mitra resmi.
             </p>
           </div>
         </div>
@@ -91,86 +89,55 @@
           <div class="card-tiket">
             <div class="info">
               <div class="col-8 p-0 ticket-name">
-                <span>Bundling - 3 Day Pass</span>
+                <span>{{
+                  ticketData.ticketType || "Normal [2 Day Pass]"
+                }}</span>
               </div>
               <div class="col-4 p-0 ticket-status">
-                <span class="sold-out">Sold Out</span>
+                <span class="onsale">On Sale</span>
               </div>
             </div>
             <hr style="border: 1px dashed #b0b0b0" />
             <div class="ticket-order">
               <div class="ticket-price">
-                <label for="" style="margin-bottom: 0px">Harga</label>
-                <span style="color: #f26419">Rp 100.000</span>
+                <label for="">Harga</label>
+                <span style="color: #f26419"
+                  >Rp {{ ticketData.price || "0" }}</span
+                >
               </div>
-            </div>
-          </div>
-          <div class="card-tiket">
-              <div class="info">
-                <div class="col-8 p-0 ticket-name">
-                  <span>Normal [2 Day Pass]</span>
-                </div>
-                <div class="col-4 p-0 ticket-status">
-                  <span class="onsale">On Sale</span>
-                </div>
-              </div>
-              <hr style="border: 1px dashed #b0b0b0" />
-              <div class="ticket-order">
-                <div class="ticket-price">
-                  <label for="">Harga</label>
-                  <span style="color: #f26419">Rp 1.000.000</span>
-                </div>
-                <div>
-                  <button
-                    class="btn-buy"
-                    v-if="selectedTicket !== 'TKT10247'"
-                    @click="toggleQtyInput('TKT10247')"
-                  >
-                    Pilih
-                  </button>
-                  <div v-if="selectedTicket === 'TKT10247'" class="qty">
-                    <div class="nice-number">
-                      <button @click="decreaseQty('TKT10247')">-</button>
-                      <input
-                        type="number"
-                        v-model="ticketQty.TKT10247"
-                        min="1"
-                        max="5"
-                        style="width: 50px; text-align: center; font-size: 16px"
-                        :readonly="!isQtyEditable"
-                      />
-                      <button @click="increaseQty('TKT10247')">+</button>
-                    </div>
-                    <div class="btn-order py-2">
-                      <a
-                        href="javascript:void(0)"
-                        @click="cancelSelection"
-                        
-                      >
-                        Batal
-                      </a>
-                      <button @click="submitTicket('TKT10247')" class="btn-buy px-3 py-2">
-                        Beli
-                      </button>
-                    </div>
+              <div>
+                <button
+                  class="btn-buy"
+                  v-if="selectedTicket !== 'TKT10247'"
+                  @click="toggleQtyInput('TKT10247')"
+                >
+                  Pilih
+                </button>
+                <div v-if="selectedTicket === 'TKT10247'" class="qty">
+                  <div class="nice-number">
+                    <button @click="decreaseQty('TKT10247')">-</button>
+                    <input
+                      type="number"
+                      v-model="ticketQty.TKT10247"
+                      min="1"
+                      max="5"
+                      style="width: 50px; text-align: center; font-size: 16px"
+                      :readonly="!isQtyEditable"
+                    />
+                    <button @click="increaseQty('TKT10247')">+</button>
+                  </div>
+                  <div class="btn-order py-2">
+                    <a href="javascript:void(0)" @click="cancelSelection"
+                      >Batal</a
+                    >
+                    <button
+                      @click="submitTicket('TKT10247')"
+                      class="btn-buy px-3 py-2"
+                    >
+                      Beli
+                    </button>
                   </div>
                 </div>
-              </div>
-            </div>
-          <div class="card-tiket">
-            <div class="info">
-              <div class="col-8 p-0 ticket-name">
-                <span>Bundling - 3 Day Pass</span>
-              </div>
-              <div class="col-4 p-0 ticket-status">
-                <span class="sold-out">Sold Out</span>
-              </div>
-            </div>
-            <hr style="border: 1px dashed #b0b0b0" />
-            <div class="ticket-order">
-              <div class="ticket-price">
-                <label for="" style="margin-bottom: 0px">Harga</label>
-                <span style="color: #f26419">Rp 100.000</span>
               </div>
             </div>
           </div>
@@ -184,7 +151,7 @@
           <div class="icon"><i class="bi bi-calendar-event py-1"></i></div>
           <div class="catext">
             <label for>Tanggal</label>
-            <span>28 - 29 Jun 2025</span>
+            <span>{{ ticketData.date || "-" }}</span>
           </div>
         </div>
         <div class="info">
@@ -193,7 +160,7 @@
           </div>
           <div class="catext">
             <label for>Waktu</label>
-            <span>15:00 - 23:00</span>
+            <span>{{ ticketData.time || "-" }}</span>
           </div>
         </div>
         <div class="info">
@@ -202,7 +169,7 @@
           </div>
           <div class="catext">
             <label for>Lokasi</label>
-            <span>Halaman Gedung Sultan Suriansyah</span>
+            <span>{{ ticketData.location || "-" }}</span>
           </div>
         </div>
       </div>
@@ -211,47 +178,32 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 
 const currentTab = ref("deskripsi");
+const selectedTicket = ref(null);
+const ticketQty = ref({ TKT10247: 1 });
+const isQtyEditable = ref(true);
+const ticketData = ref({});
 
-// To handle ticket selection and quantities
-// To handle ticket selection and quantities
-const selectedTicket = ref(null); // Tracks the selected ticket
-const ticketQty = ref({
-  TKT10247: 1, // Initial quantity for this ticket
+onMounted(() => {
+  const data = localStorage.getItem("selectedEvent");
+  if (data) {
+    ticketData.value = JSON.parse(data);
+  }
 });
-const isQtyEditable = ref(true); // To control whether the quantity input is editable
-
-// Function to toggle the visibility of quantity input when "Pilih" is clicked
 const toggleQtyInput = (ticketId) => {
-  if (selectedTicket.value === ticketId) {
-    selectedTicket.value = null; // If the same ticket is clicked again, hide the input
-  } else {
-    selectedTicket.value = ticketId; // Otherwise, show the input for the selected ticket
-  }
+  selectedTicket.value = selectedTicket.value === ticketId ? null : ticketId;
 };
-
-// Increase ticket quantity (limit to max of 5)
 const increaseQty = (ticketId) => {
-  if (ticketQty.value[ticketId] < 5) {
-    ticketQty.value[ticketId]++;
-  }
+  if (ticketQty.value[ticketId] < 5) ticketQty.value[ticketId]++;
 };
-
-// Decrease ticket quantity (limit to min of 1)
 const decreaseQty = (ticketId) => {
-  if (ticketQty.value[ticketId] > 1) {
-    ticketQty.value[ticketId]--;
-  }
+  if (ticketQty.value[ticketId] > 1) ticketQty.value[ticketId]--;
 };
-
-// Cancel the ticket selection
 const cancelSelection = () => {
   selectedTicket.value = null;
 };
-
-// Submit ticket selection (for now, just log the selected ticket and quantity)
 const submitTicket = (ticketId) => {
   alert(
     `Ticket ${ticketId} with quantity ${ticketQty.value[ticketId]} purchased!`
@@ -333,13 +285,13 @@ const submitTicket = (ticketId) => {
 }
 
 button {
-    background-color: #fafafa;
-    border: none;
-    outline: none;
-    border-radius: 8px;
-    color: #1f1f95;
-    padding: 5px 12px;
-    font-weight: 500;
+  background-color: #fafafa;
+  border: none;
+  outline: none;
+  border-radius: 8px;
+  color: #1f1f95;
+  padding: 5px 12px;
+  font-weight: 500;
 }
 
 .btn-order {
