@@ -6,8 +6,8 @@ import Contact      from '@/views/Contact.vue'
 import EventDetail  from '@/views/EventDetail.vue' 
 import Syarat       from '@/views/SyaratKetentuan.vue'
 import FAQ          from '@/views/FAQ.vue'
-import TicketCheckout from '@/views/TicketCheckout.vue';
-import Login from '@/views/Login.vue'; 
+import TicketCheckout from '@/views/TicketCheckout.vue'
+import Login        from '@/views/Login.vue'; 
 
 const routes = [
     { path: '/',          name: 'Home',    component: Home },

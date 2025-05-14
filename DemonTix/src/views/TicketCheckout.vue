@@ -1,110 +1,191 @@
 <template>
   <div class="checkout-container">
+    <!-- Formulir Data Pesanan -->
     <div class="form-section">
-      <!-- Data Pesanan -->
       <div class="form-box">
-        <h2 class="section-title">Data Pesanan</h2>
+        <h3 class="box-title">Data Pesanan</h3>
         <div class="form-grid">
-          <div class="form-group">
-            <label>Nama Lengkap</label>
-            <input type="text" v-model="order.nama" placeholder="Marcus Holloway" />
+          <div class="form-group col-span-2">
+            <label>Nama Lengkap *</label>
+            <input
+              type="text"
+              v-model="order.nama"
+              placeholder="Marcus Holloway"
+              required
+            />
           </div>
-
           <div class="form-group">
-            <label>Identitas</label>
-            <div class="identity-row">
-              <select v-model="order.jenisIdentitas">
-                <option value="KTP">KTP</option>
-                <option value="SIM">SIM</option>
-                <option value="Paspor">Paspor</option>
-              </select>
-              <input type="text" v-model="order.nomorIdentitas" placeholder="Nomor Identitas" />
+            <label>Identitas *</label>
+            <select v-model="order.jenisIdentitas" required>
+              <option value="KTP">KTP</option>
+              <option value="SIM">SIM</option>
+              <option value="Paspor">Paspor</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>&nbsp;</label>
+            <input
+              type="text"
+              v-model="order.nomorIdentitas"
+              placeholder="Nomor Identitas"
+              required
+            />
+          </div>
+          <div class="form-group col-span-2">
+            <label>Jenis Kelamin *</label>
+            <div class="radio-row">
+              <label><input type="radio" v-model="order.jenisKelamin" value="Laki-laki" /> Laki-laki</label>
+              <label><input type="radio" v-model="order.jenisKelamin" value="Perempuan" /> Perempuan</label>
             </div>
           </div>
-
-          <div class="form-group gender">
-            <label>&nbsp;</label>
-            <label><input type="radio" value="Laki-laki" v-model="order.gender" /> Laki-laki</label>
-            <label><input type="radio" value="Perempuan" v-model="order.gender" /> Perempuan</label>
-          </div>
-
-          <div class="form-group">
+          <div class="form-group col-span-2">
             <label>Usia</label>
-            <input type="number" v-model="order.usia" />
+            <input type="number" v-model="order.usia" placeholder="Usia" />
           </div>
-
-          <div class="form-group">
-            <label>Email</label>
-            <input type="email" v-model="order.email" />
+          <div class="form-group col-span-2">
+            <label>Email *</label>
+            <input
+              type="email"
+              v-model="order.email"
+              placeholder="email@domain.com"
+              required
+            />
           </div>
-
-          <div class="form-group">
-            <label>No WhatsApp</label>
-            <input type="text" v-model="order.whatsapp" />
+          <div class="form-group col-span-2">
+            <label>No. Whatsapp *</label>
+            <input
+              type="text"
+              v-model="order.whatsapp"
+              placeholder="08xxxxxxxxxx"
+              required
+            />
+          </div>
+          <div class="form-group col-span-2">
+            <label>Jumlah Tiket *</label>
+            <input
+              type="number"
+              min="1"
+              v-model.number="ticketCount"
+              required
+            />
           </div>
         </div>
       </div>
 
-      <!-- Data Pemilik Tiket -->
-      <div class="form-box">
-        <div class="form-title">
-          <h2 class="section-title">Data Pemilik Tiket</h2>
-          <button class="copy-button" @click="copyOrderData">Samakan dengan data pesanan</button>
-        </div>
-        <p class="ticket-label">Pemilik Tiket 1</p>
-        <div class="form-grid">
-          <div class="form-group">
-            <label>Nama Lengkap</label>
-            <input type="text" v-model="ticket.nama" placeholder="Marcus Holloway" />
-          </div>
-
-          <div class="form-group">
-            <label>Identitas</label>
-            <div class="identity-row">
-              <select v-model="ticket.jenisIdentitas">
+      <!-- Panel Data Pemilik Tiket Dinamis -->
+      <div
+        v-for="(t, idx) in tickets"
+        :key="idx"
+        class="form-box"
+      >
+        <details open>
+          <summary class="box-title-row">
+            <span class="box-title">Data Pemilik Tiket {{ idx + 1 }}</span>
+            <label class="checkbox-label">
+              <input
+                type="checkbox"
+                v-model="t.sameAsOrder"
+                @change="copyOrderToTicket(idx)"
+              />
+              Samakan dengan data pesanan
+            </label>
+          </summary>
+          <div class="form-grid mt-4">
+            <div class="form-group col-span-2">
+              <label>Nama Lengkap *</label>
+              <input
+                type="text"
+                v-model="t.nama"
+                placeholder="Marcus Holloway"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label>Identitas *</label>
+              <select v-model="t.jenisIdentitas" required>
                 <option value="KTP">KTP</option>
                 <option value="SIM">SIM</option>
                 <option value="Paspor">Paspor</option>
               </select>
-              <input type="text" v-model="ticket.nomorIdentitas" placeholder="Nomor Identitas" />
+            </div>
+            <div class="form-group">
+              <label>&nbsp;</label>
+              <input
+                type="text"
+                v-model="t.nomorIdentitas"
+                placeholder="Nomor Identitas"
+                required
+              />
+            </div>
+            <div class="form-group col-span-2">
+              <label>Jenis Kelamin *</label>
+              <div class="radio-row">
+                <label><input type="radio" v-model="t.jenisKelamin" value="Laki-laki" /> Laki-laki</label>
+                <label><input type="radio" v-model="t.jenisKelamin" value="Perempuan" /> Perempuan</label>
+              </div>
+            </div>
+            <div class="form-group col-span-2">
+              <label>Usia</label>
+              <input type="number" v-model="t.usia" placeholder="Usia" />
+            </div>
+            <div class="form-group col-span-2">
+              <label>Email *</label>
+              <input
+                type="email"
+                v-model="t.email"
+                placeholder="email@domain.com"
+                required
+              />
+            </div>
+            <div class="form-group col-span-2">
+              <label>No. Whatsapp *</label>
+              <input
+                type="text"
+                v-model="t.whatsapp"
+                placeholder="08xxxxxxxxxx"
+                required
+              />
             </div>
           </div>
-
-          <div class="form-group gender">
-            <label>&nbsp;</label>
-            <label><input type="radio" value="Laki-laki" v-model="ticket.gender" /> Laki-laki</label>
-            <label><input type="radio" value="Perempuan" v-model="ticket.gender" /> Perempuan</label>
-          </div>
-
-          <div class="form-group">
-            <label>Usia</label>
-            <input type="number" v-model="ticket.usia" />
-          </div>
-
-          <div class="form-group">
-            <label>Email</label>
-            <input type="email" v-model="ticket.email" />
-          </div>
-
-          <div class="form-group">
-            <label>No WhatsApp</label>
-            <input type="text" v-model="ticket.whatsapp" />
-          </div>
-        </div>
+        </details>
       </div>
     </div>
 
-    <!-- Rincian Pesanan -->
+    <!-- Ringkasan Pesanan -->
     <div class="summary-section">
       <div class="summary-box">
-        <h2 class="section-title">Rincian Pesanan</h2>
-        <img src="/eventmusik1.png" alt="Event Image" class="event-image" />
-        <p class="event-title">HIPHOP SORINGIN FESTIVAL 2025</p>
-        <p>SORINGIN PASS <strong>Rp 65.000</strong> &times;2</p>
-        <div class="summary-row"><span>Subtotal</span><span>Rp 130.000</span></div>
-        <div class="summary-row"><span class="disabled">Biaya Layanan</span><span class="disabled">Rp 11.000</span></div>
-        <div class="summary-total"><span>Total</span><span>Rp 141.000</span></div>
-        <button class="continue-button">Lanjutkan</button>
+        <h3 class="box-title">Rincian Pesanan</h3>
+        <img :src="eventInfo.image" alt="Event" class="event-image" />
+        <div class="event-info">
+          <div class="event-name">{{ eventInfo.name }}</div>
+          <div class="ticket-info">
+            <div>
+              <div class="info-label">Tiket</div>
+              <div>Reguler-Day 2</div>
+              <div class="price">Rp {{ eventInfo.price.toLocaleString('id-ID') }}</div>
+            </div>
+            <div class="qty">{{ ticketCount }}x</div>
+          </div>
+          <div class="voucher-row">
+            <input type="text" placeholder="Masukkan kode voucher" />
+            <span class="apply-link">Terapkan</span>
+          </div>
+          <div class="summary-row">
+            <span>SubTotal</span>
+            <span>Rp {{ (eventInfo.price * ticketCount).toLocaleString("id-ID") }}</span>
+          </div>
+          <div class="summary-row">
+            <span>Biaya Layanan</span>
+            <span>Rp {{ (6000 * ticketCount).toLocaleString("id-ID") }}</span>
+          </div>
+          <div class="summary-row total">
+            <strong>Total</strong>
+            <strong>
+              Rp {{ ((eventInfo.price + 6000) * ticketCount).toLocaleString("id-ID") }}
+            </strong>
+          </div>
+          <button class="continue-button">Lanjutkan</button>
+        </div>
       </div>
     </div>
   </div>
@@ -112,167 +193,220 @@
 
 <script>
 export default {
-  name: 'TicketCheckout',
+  name: "TicketCheckout",
   data() {
     return {
       order: {
-        nama: 'Marcus Holloway',
-        jenisIdentitas: 'KTP',
-        nomorIdentitas: '',
-        gender: '',
-        usia: '',
-        email: '',
-        whatsapp: '',
+        nama: "",
+        jenisIdentitas: "KTP",
+        nomorIdentitas: "",
+        jenisKelamin: "",
+        usia: "",
+        email: "",
+        whatsapp: ""
       },
-      ticket: {
-        nama: 'Marcus Holloway',
-        jenisIdentitas: 'KTP',
-        nomorIdentitas: '',
-        gender: '',
-        usia: '',
-        email: '',
-        whatsapp: '',
+      ticketCount: 1,
+      tickets: [],
+      eventInfo: {
+        name: "Pasta Mangan",
+        price: 55000,
+        image: "/eventmusik1.png"
       },
+      eventDetail: {
+        image: "",
+        name: "",
+        ticketName: "",
+        ticketPrice: 0
+      }
+
     };
   },
-  methods: {
-    copyOrderData() {
-      this.ticket = { ...this.order };
-    },
+  mounted() {
+    this.initTicketCountFromQuery();
+    this.initEventInfoFromQuery();
+    this.adjustTickets();
   },
+  watch: {
+    ticketCount() {
+      this.adjustTickets();
+    }
+  },
+  methods: {
+    initTicketCountFromQuery() {
+      const quantity = Number(this.$route.query.quantity);
+      if (!isNaN(quantity) && quantity > 0) {
+        this.ticketCount = quantity;
+      }
+    },
+    initEventInfoFromQuery() {
+      const { eventName, price, image } = this.$route.query;
+
+      if (eventName) this.eventInfo.name = decodeURIComponent(eventName);
+      if (!isNaN(Number(price))) this.eventInfo.price = Number(price);
+      if (image) this.eventInfo.image = decodeURIComponent(image);
+    },
+    adjustTickets() {
+      const count = Math.max(1, Number(this.ticketCount) || 1);
+      while (this.tickets.length < count) {
+        this.tickets.push({
+          nama: "",
+          jenisIdentitas: "KTP",
+          nomorIdentitas: "",
+          jenisKelamin: "",
+          usia: "",
+          email: "",
+          whatsapp: "",
+          sameAsOrder: false
+        });
+      }
+      while (this.tickets.length > count) {
+        this.tickets.pop();
+      }
+    },
+    copyOrderToTicket(idx) {
+  const ticket = this.tickets[idx];
+
+  if (ticket.sameAsOrder) {
+    ticket.nama = this.order.nama;
+    ticket.jenisIdentitas = this.order.jenisIdentitas;
+    ticket.nomorIdentitas = this.order.nomorIdentitas;
+    ticket.jenisKelamin = this.order.jenisKelamin;
+    ticket.usia = this.order.usia;
+    ticket.email = this.order.email;
+    ticket.whatsapp = this.order.whatsapp;
+  }
+}
+  }
 };
 </script>
+
+
 
 <style scoped>
 .checkout-container {
   display: flex;
+  gap: 24px;
   padding: 20px;
-  background: #f2f2f2;
-  gap: 20px;
-  font-family: 'Arial', sans-serif;
 }
-
 .form-section {
   flex: 2;
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
-
 .summary-section {
   flex: 1;
 }
-
-.form-box, .summary-box {
+.form-box,
+.summary-box {
   background: #fff;
-  border-radius: 8px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
   padding: 20px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
 }
-
-.section-title {
-  font-size: 24px;
-  font-weight: 700;
-  margin-bottom: 10px;
+.box-title {
+  font-size: 16px;
+  font-weight: 600;
 }
-
+.box-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
 .form-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
 }
-
+.col-span-2 {
+  grid-column: span 2;
+}
 .form-group {
   display: flex;
   flex-direction: column;
 }
-
-.identity-row {
-  display: flex;
-  gap: 10px;
-}
-
-input, select {
-  padding: 8px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  font-size: 14px;
-}
-
 label {
-  font-weight: 500;
+  font-size: 13px;
   margin-bottom: 5px;
 }
-
-.gender {
-  flex-direction: row;
-  align-items: center;
-  gap: 10px;
-}
-
-.ticket-label {
-  color: red;
-  font-weight: bold;
-  margin: 10px 0;
-}
-
-.form-title {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.copy-button {
-  padding: 6px 12px;
-  border: 1px solid #000;
-  background: #fff;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.summary-box img {
-  width: 100%;
-  margin-bottom: 10px;
-  border-radius: 6px;
-}
-
-.event-title {
-  font-weight: bold;
-  margin: 10px 0;
-  font-size: 16px;
-}
-
-.summary-row, .summary-total {
-  display: flex;
-  justify-content: space-between;
-  margin: 8px 0;
+input,
+select {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
   font-size: 14px;
 }
-
-.summary-total {
-  font-weight: bold;
-  border-top: 1px solid #ccc;
-  padding-top: 8px;
+.radio-row {
+  display: flex;
+  gap: 20px;
 }
-
-.disabled {
-  color: #aaa;
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
 }
-
-.continue-button {
-  margin-top: 16px;
+.event-image {
   width: 100%;
-  background-color: #922323;
-  color: white;
-  font-size: 16px;
-  font-weight: bold;
-  padding: 10px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
+  border-radius: 5px;
+  margin: 12px 0;
 }
-
+.event-name {
+  font-weight: bold;
+  font-size: 15px;
+  margin-bottom: 6px;
+}
+.ticket-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.info-label {
+  font-size: 12px;
+  color: #555;
+}
+.price {
+  font-weight: bold;
+  margin-top: 4px;
+}
+.qty {
+  text-align: right;
+  font-size: 14px;
+}
+.voucher-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.apply-link {
+  color: #b00000;
+  cursor: pointer;
+  font-size: 14px;
+}
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+.total {
+  margin-top: 8px;
+  font-weight: bold;
+}
+.continue-button {
+  width: 100%;
+  padding: 12px;
+  background: #b00000;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 12px;
+}
 .continue-button:hover {
-  background-color: #b00000;
+  background: #922323;
 }
 </style>

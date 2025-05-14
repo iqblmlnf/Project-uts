@@ -192,24 +192,30 @@ onMounted(() => {
     ticketData.value = JSON.parse(data);
   }
 });
+
 const toggleQtyInput = (ticketId) => {
   selectedTicket.value = selectedTicket.value === ticketId ? null : ticketId;
 };
+
 const increaseQty = (ticketId) => {
   if (ticketQty.value[ticketId] < 5) ticketQty.value[ticketId]++;
 };
+
 const decreaseQty = (ticketId) => {
   if (ticketQty.value[ticketId] > 1) ticketQty.value[ticketId]--;
 };
+
 const cancelSelection = () => {
   selectedTicket.value = null;
 };
+
 const submitTicket = (ticketId) => {
-  alert(
-    `Ticket ${ticketId} with quantity ${ticketQty.value[ticketId]} purchased!`
-  );
+  const quantity = ticketQty.value[ticketId];
+  const total = ticketData.value.price * quantity;
+  window.location.href = `/ticket-checkout/:eventId?ticketId=${ticketId}&quantity=${quantity}&total=${total}`;
 };
 </script>
+
 
 <style scoped>
 .nice-number {
