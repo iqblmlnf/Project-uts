@@ -212,10 +212,23 @@ const cancelSelection = () => {
 const submitTicket = (ticketId) => {
   const quantity = ticketQty.value[ticketId];
   const total = ticketData.value.price * quantity;
-  window.location.href = `/ticket-checkout/:eventId?ticketId=${ticketId}&quantity=${quantity}&total=${total}`;
+  const eventId = ticketData.value.id || "unknown"; // Pastikan ada ID event
+
+  // Menyimpan data event dan tiket ke localStorage
+  localStorage.setItem("selectedEvent", JSON.stringify({
+    name: ticketData.value.title, // Pastikan menyimpan nama event di sini
+    price: ticketData.value.price,
+    image: ticketData.value.image,
+    ticketName: ticketData.value.ticketType || "Reguler-Day 2",
+    quantity,
+    ticketId,
+    total
+  }));
+
+  // Mengarahkan pengguna ke halaman checkout dengan parameter URL
+  window.location.href = `/ticket-checkout/${eventId}?ticketId=${ticketId}&quantity=${quantity}&total=${total}`;
 };
 </script>
-
 
 <style scoped>
 .nice-number {

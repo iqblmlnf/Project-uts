@@ -34,8 +34,22 @@
           <div class="form-group col-span-2">
             <label>Jenis Kelamin *</label>
             <div class="radio-row">
-              <label><input type="radio" v-model="order.jenisKelamin" value="Laki-laki" /> Laki-laki</label>
-              <label><input type="radio" v-model="order.jenisKelamin" value="Perempuan" /> Perempuan</label>
+              <label
+                ><input
+                  type="radio"
+                  v-model="order.jenisKelamin"
+                  value="Laki-laki"
+                />
+                Laki-laki</label
+              >
+              <label
+                ><input
+                  type="radio"
+                  v-model="order.jenisKelamin"
+                  value="Perempuan"
+                />
+                Perempuan</label
+              >
             </div>
           </div>
           <div class="form-group col-span-2">
@@ -73,11 +87,7 @@
       </div>
 
       <!-- Panel Data Pemilik Tiket Dinamis -->
-      <div
-        v-for="(t, idx) in tickets"
-        :key="idx"
-        class="form-box"
-      >
+      <div v-for="(t, idx) in tickets" :key="idx" class="form-box">
         <details open>
           <summary class="box-title-row">
             <span class="box-title">Data Pemilik Tiket {{ idx + 1 }}</span>
@@ -120,8 +130,22 @@
             <div class="form-group col-span-2">
               <label>Jenis Kelamin *</label>
               <div class="radio-row">
-                <label><input type="radio" v-model="t.jenisKelamin" value="Laki-laki" /> Laki-laki</label>
-                <label><input type="radio" v-model="t.jenisKelamin" value="Perempuan" /> Perempuan</label>
+                <label
+                  ><input
+                    type="radio"
+                    v-model="t.jenisKelamin"
+                    value="Laki-laki"
+                  />
+                  Laki-laki</label
+                >
+                <label
+                  ><input
+                    type="radio"
+                    v-model="t.jenisKelamin"
+                    value="Perempuan"
+                  />
+                  Perempuan</label
+                >
               </div>
             </div>
             <div class="form-group col-span-2">
@@ -152,17 +176,25 @@
     </div>
 
     <!-- Ringkasan Pesanan -->
+    <!-- Ringkasan Pesanan -->
     <div class="summary-section">
       <div class="summary-box">
         <h3 class="box-title">Rincian Pesanan</h3>
         <img :src="eventInfo.image" alt="Event" class="event-image" />
         <div class="event-info">
-          <div class="event-name">{{ eventInfo.name }}</div>
+          <div class="event-name">
+            {{ eventInfo.name || "Event Tidak Diketahui" }}
+          </div>
+          <!-- Nama Event -->
           <div class="ticket-info">
             <div>
               <div class="info-label">Tiket</div>
-              <div>Reguler-Day 2</div>
-              <div class="price">Rp {{ eventInfo.price.toLocaleString('id-ID') }}</div>
+              <div>{{ eventInfo.ticketName || "Reguler-Day 2" }}</div>
+              <!-- Nama Tiket -->
+              <div class="price">
+                Rp {{ eventInfo.price.toLocaleString("id-ID") }}
+                <!-- Harga Tiket -->
+              </div>
             </div>
             <div class="qty">{{ ticketCount }}x</div>
           </div>
@@ -172,7 +204,10 @@
           </div>
           <div class="summary-row">
             <span>SubTotal</span>
-            <span>Rp {{ (eventInfo.price * ticketCount).toLocaleString("id-ID") }}</span>
+            <span>
+              Rp
+              {{ (eventInfo.price * ticketCount).toLocaleString("id-ID") }}
+            </span>
           </div>
           <div class="summary-row">
             <span>Biaya Layanan</span>
@@ -181,7 +216,10 @@
           <div class="summary-row total">
             <strong>Total</strong>
             <strong>
-              Rp {{ ((eventInfo.price + 6000) * ticketCount).toLocaleString("id-ID") }}
+              Rp
+              {{
+                ((eventInfo.price + 6000) * ticketCount).toLocaleString("id-ID")
+              }}
             </strong>
           </div>
           <button class="continue-button">Lanjutkan</button>
@@ -203,47 +241,70 @@ export default {
         jenisKelamin: "",
         usia: "",
         email: "",
-        whatsapp: ""
+        whatsapp: "",
       },
       ticketCount: 1,
       tickets: [],
       eventInfo: {
-        name: "Pasta Mangan",
-        price: 55000,
-        image: "/eventmusik1.png"
+        name: "",
+        price: 0,
+        image: "",
       },
       eventDetail: {
         image: "",
         name: "",
         ticketName: "",
-        ticketPrice: 0
-      }
-
+        ticketPrice: 0,
+      },
+      selectedEvent: null, // Tambahkan properti untuk menyimpan event data
+      ticketId: null, // Properti untuk menyimpan ticketId
+      quantity: null, // Properti untuk menyimpan quantity
+      total: null, // Properti untuk menyimpan total
     };
   },
   mounted() {
     this.initTicketCountFromQuery();
-    this.initEventInfoFromQuery();
     this.adjustTickets();
-  },
-  watch: {
-    ticketCount() {
-      this.adjustTickets();
-    }
+    this.loadEventFromStorage();
+    this.loadEventFromURL(); // Menambahkan pemanggilan loadEventFromURL
   },
   methods: {
+    loadEventFromStorage() {
+      const data = localStorage.getItem("selectedEvent");
+      if (data) {
+        const parsed = JSON.parse(data);
+        this.eventInfo.name = parsed.name || "Event Tidak Diketahui";
+        this.eventInfo.price = parsed.price || 0;
+        this.eventInfo.image = parsed.image || "/event-default.jpg";
+        this.eventInfo.ticketName = parsed.ticketName || "Reguler-Day 2";
+      } else {
+        console.log("No event data in localStorage");
+      }
+    },
+
+    loadEventFromURL() {
+      // Ambil data dari URL
+      const routeParams = new URLSearchParams(window.location.search);
+      this.ticketId = routeParams.get("ticketId");
+      this.quantity = routeParams.get("quantity");
+      this.total = routeParams.get("total");
+
+      // Misalnya, jika kamu ingin mengatur eventInfo berdasarkan data dari URL
+      const eventData = JSON.parse(localStorage.getItem("checkoutEvent"));
+      if (eventData) {
+        this.selectedEvent = eventData;
+        // Pastikan untuk menyesuaikan eventInfo jika diperlukan
+        this.eventInfo.name = eventData.name;
+        this.eventInfo.price = eventData.price;
+        this.eventInfo.image = eventData.image;
+      }
+    },
+
     initTicketCountFromQuery() {
       const quantity = Number(this.$route.query.quantity);
       if (!isNaN(quantity) && quantity > 0) {
         this.ticketCount = quantity;
       }
-    },
-    initEventInfoFromQuery() {
-      const { eventName, price, image } = this.$route.query;
-
-      if (eventName) this.eventInfo.name = decodeURIComponent(eventName);
-      if (!isNaN(Number(price))) this.eventInfo.price = Number(price);
-      if (image) this.eventInfo.image = decodeURIComponent(image);
     },
     adjustTickets() {
       const count = Math.max(1, Number(this.ticketCount) || 1);
@@ -256,7 +317,7 @@ export default {
           usia: "",
           email: "",
           whatsapp: "",
-          sameAsOrder: false
+          sameAsOrder: false,
         });
       }
       while (this.tickets.length > count) {
@@ -264,23 +325,20 @@ export default {
       }
     },
     copyOrderToTicket(idx) {
-  const ticket = this.tickets[idx];
-
-  if (ticket.sameAsOrder) {
-    ticket.nama = this.order.nama;
-    ticket.jenisIdentitas = this.order.jenisIdentitas;
-    ticket.nomorIdentitas = this.order.nomorIdentitas;
-    ticket.jenisKelamin = this.order.jenisKelamin;
-    ticket.usia = this.order.usia;
-    ticket.email = this.order.email;
-    ticket.whatsapp = this.order.whatsapp;
-  }
-}
-  }
+      const ticket = this.tickets[idx];
+      if (ticket.sameAsOrder) {
+        ticket.nama = this.order.nama;
+        ticket.jenisIdentitas = this.order.jenisIdentitas;
+        ticket.nomorIdentitas = this.order.nomorIdentitas;
+        ticket.jenisKelamin = this.order.jenisKelamin;
+        ticket.usia = this.order.usia;
+        ticket.email = this.order.email;
+        ticket.whatsapp = this.order.whatsapp;
+      }
+    },
+  },
 };
 </script>
-
-
 
 <style scoped>
 .checkout-container {
